@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KBMHttpService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8c0f252444f2a9274553e4800e421e4a5847d8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("KBMHttpService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KBMHttpService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
