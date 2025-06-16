@@ -1,10 +1,13 @@
-﻿namespace KBMGrpcService.Domain.Entities
+﻿using KBMGrpcService.Domain.ValueObjects;
+
+namespace KBMGrpcService.Domain.Entities
 {
-    public abstract class User : BaseEntity
+    public class User : BaseEntity
     {
-        public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
+        public string Name { get; set; } = null!;
+        public string Username { get; set; } = null!;
+        public Email Email { get; set; } = null!;
+
+        public ICollection<UserOrganization> UserOrganizations { get; set; } = new List<UserOrganization>();
     }
 }

@@ -1,0 +1,106 @@
+﻿{
+  "Organizations": [
+    {
+      "Name": "Contoso SRL",
+      "Address": "Strada Exemplului 10, București"
+    },
+    {
+      "Name": "Fabrikam SA",
+      "Address": "Calea Industriei 25, Cluj-Napoca"
+    }
+  ],
+  "Users": [
+    {
+      "Name": "Alice Ionescu",
+      "Username": "alice.ionescu",
+      "Email": "alice.ionescu@example.com"
+    },
+    {
+      "Name": "Bogdan Pop",
+      "Username": "bogdan.pop",
+      "Email": "bogdan.pop@example.com"
+    },
+    {
+      "Name": "Camelia Vasilescu",
+      "Username": "camelia.v",
+      "Email": "camelia.v@example.com"
+    },
+    {
+      "Name": "Dan Mihai",
+      "Username": "dan.mihai",
+      "Email": "dan.mihai@example.com"
+    },
+    {
+      "Name": "Elena Georgiu",
+      "Username": "elena.georgiu",
+      "Email": "elena.georgiu@example.com"
+    },
+    {
+      "Name": "Florin Radu",
+      "Username": "florin.radu",
+      "Email": "florin.radu@example.com"
+    },
+    {
+      "Name": "Gabriela Stoica",
+      "Username": "gabriela.stoica",
+      "Email": "gabriela.stoica@example.com"
+    },
+    {
+      "Name": "Horia Iacob",
+      "Username": "horia.iacob",
+      "Email": "horia.iacob@example.com"
+    },
+    {
+      "Name": "Irina Luca",
+      "Username": "irina.luca",
+      "Email": "irina.luca@example.com"
+    },
+    {
+      "Name": "Jasmine Tudor",
+      "Username": "jasmine.tudor",
+      "Email": "jasmine.tudor@example.com"
+    }
+  ],
+  "Memberships": [
+    {
+      "Username": "alice.ionescu",
+      "OrganizationName": "Contoso SRL"
+    },
+    {
+      "Username": "bogdan.pop",
+      "OrganizationName": "Contoso SRL"
+    },
+    {
+      "Username": "camelia.v",
+      "OrganizationName": "Contoso SRL"
+    },
+    {
+      "Username": "dan.mihai",
+      "OrganizationName": "Contoso SRL"
+    },
+    {
+      "Username": "elena.georgiu",
+      "OrganizationName": "Contoso SRL"
+    },
+    {
+      "Username": "florin.radu",
+      "OrganizationName": "Fabrikam SA"
+    },
+    {
+      "Username": "gabriela.stoica",
+      "OrganizationName": "Fabrikam SA"
+    },
+    {
+      "Username": "horia.iacob",
+      "OrganizationName": "Fabrikam SA"
+    },
+    {
+      "Username": "irina.luca",
+      "OrganizationName": "Fabrikam SA"
+    },
+    {
+      "Username": "jasmine.tudor",
+      "OrganizationName": "Fabrikam SA"
+    }
+  ]
+}

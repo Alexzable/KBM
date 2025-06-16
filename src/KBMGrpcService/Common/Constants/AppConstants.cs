@@ -1,6 +1,8 @@
 ﻿namespace KBMGrpcService.Common.Constants
 {
-    public class AppConstants
+    public static class AppConstants
     {
+        public const string SeedFile = "Infrastructure/Data/Seeding/JSON/SeedData.json";
+        public const string SerilogPath = "Logs/daily-log-.txt";
     }
 }
