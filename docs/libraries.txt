@@ -1,0 +1,19 @@
+KBMGrpcService - .NET 8.0
+
+Microsoft.EntityFrameworkCore.SqlServer				8.0.0
+Microsoft.EntityFrameworkCore.Design				8.0.0
+FluentValidation						11.6.0
+Serilog.AspNetCore						7.0.0
+Serilog.Sinks.Console						4.1.0
+AutoMapper.Extensions.Microsoft.DependencyInjection		12.0.1
+OpenTelemetry.Extensions.Hosting				1.5.0
+
+
+KBMHttpService - .NET 8.0
+
+Grpc.Net.Client							2.58.0
+Microsoft.AspNetCore.Authentication.JwtBearer			8.0.0
+FluentValidation.AspNetCore					11.6.0
+AspNetCoreRateLimit						4.4.0
+Serilog.AspNetCore						7.0.0
+AutoMapper.Extensions.Microsoft.DependencyInjection		12.0.1
