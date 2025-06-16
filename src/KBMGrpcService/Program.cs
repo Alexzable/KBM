@@ -13,6 +13,7 @@ IConfiguration configuration = builder.Configuration;
 builder.Services.AddGrpc();
 
 builder.Services.AddPersistence(configuration);
+builder.Services.AddInfrastructureServices(configuration);
 
 var app = builder.Build();
 

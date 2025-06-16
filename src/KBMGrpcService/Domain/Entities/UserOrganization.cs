@@ -1,6 +1,8 @@
-﻿namespace KBMGrpcService.Domain.Entities
+﻿using KBMGrpcService.Domain.Base;
+
+namespace KBMGrpcService.Domain.Entities
 {
-    public class UserOrganization
+    public class UserOrganization : Auditable
     {
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;

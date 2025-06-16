@@ -1,8 +1,9 @@
-﻿namespace KBMGrpcService.Domain.Entities
+﻿namespace KBMGrpcService.Domain.Base
 {
-    public abstract class BaseEntity
+    public abstract class Entity<TId> : IAuditable
     {
-        public Guid Id { get; set; }
+        public TId Id { get; set; } = default!;
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }

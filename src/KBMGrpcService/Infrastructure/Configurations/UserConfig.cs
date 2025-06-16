@@ -11,6 +11,9 @@ namespace KBMGrpcService.Infrastructure.Configurations
         {
             builder.ToTable("Users");
 
+            builder.Property(o => o.Id)
+                    .ValueGeneratedOnAdd();
+
             builder.Property(u => u.Username)
                    .IsRequired()
                    .HasMaxLength(100);

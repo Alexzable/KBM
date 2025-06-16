@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Data\Migrations\" />
+    <Folder Include="Infrastructure\Data\Seeding\JSON\" />
   </ItemGroup>
 
 </Project>

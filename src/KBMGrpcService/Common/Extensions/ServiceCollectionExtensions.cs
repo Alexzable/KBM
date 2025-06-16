@@ -1,4 +1,5 @@
 ﻿using KBMGrpcService.Infrastructure.Data;
+using KBMGrpcService.Infrastructure.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
 
 namespace KBMGrpcService.Common.Extensions
@@ -10,6 +11,13 @@ namespace KBMGrpcService.Common.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            return services;
+        }
+
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
             return services;
         }

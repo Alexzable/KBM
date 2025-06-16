@@ -1,4 +1,5 @@
 ﻿using KBMGrpcService.Common.Constants;
+using KBMGrpcService.Domain.Entities;
 using KBMGrpcService.Infrastructure.Data.Seeding.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -22,7 +23,7 @@ namespace KBMGrpcService.Infrastructure.Data.Seeding
             {
                 if (await context.Organizations.AnyAsync(o => o.Name == orgDto.Name))
                     continue;
-                context.Organizations.Add(new Domain.Entities.Organization
+                context.Organizations.Add(new Organization
                 {
                     Name = orgDto.Name,
                     Address = orgDto.Address
@@ -34,7 +35,7 @@ namespace KBMGrpcService.Infrastructure.Data.Seeding
             {
                 if (await context.Users.AnyAsync(u => u.Username == userDto.Username))
                     continue;
-                context.Users.Add(new Domain.Entities.User
+                context.Users.Add(new User
                 {
                     Name = userDto.Name,
                     Username = userDto.Username,

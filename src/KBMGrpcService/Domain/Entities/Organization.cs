@@ -1,6 +1,8 @@
-﻿namespace KBMGrpcService.Domain.Entities
+﻿using KBMGrpcService.Domain.Base;
+
+namespace KBMGrpcService.Domain.Entities
 {
-    public class Organization : BaseEntity
+    public class Organization : Entity<Guid>
     {
         public string Name { get; set; } = null!;
         public string? Address { get; set; }

@@ -1,8 +1,9 @@
-﻿using KBMGrpcService.Domain.ValueObjects;
+﻿using KBMGrpcService.Domain.Base;
+using KBMGrpcService.Domain.ValueObjects;
 
 namespace KBMGrpcService.Domain.Entities
 {
-    public class User : BaseEntity
+    public class User : Entity<Guid>
     {
         public string Name { get; set; } = null!;
         public string Username { get; set; } = null!;

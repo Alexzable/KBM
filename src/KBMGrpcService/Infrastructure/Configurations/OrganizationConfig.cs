@@ -10,6 +10,9 @@ namespace KBMGrpcService.Infrastructure.Configurations
         {
             builder.ToTable("Organizations");
 
+            builder.Property(o => o.Id)
+                    .ValueGeneratedOnAdd();
+
             builder.Property(o => o.Name)
                    .IsRequired()
                    .HasMaxLength(200);
