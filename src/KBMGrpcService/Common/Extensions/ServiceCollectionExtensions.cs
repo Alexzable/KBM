@@ -1,4 +1,7 @@
-﻿using KBMGrpcService.Infrastructure.Data;
+﻿using KBMGrpcService.Application.Interfaces;
+using KBMGrpcService.Application.Services;
+using KBMGrpcService.Common.Mapping;
+using KBMGrpcService.Infrastructure.Data;
 using KBMGrpcService.Infrastructure.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +20,14 @@ namespace KBMGrpcService.Common.Extensions
 
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddGrpc();
+
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
+
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddAutoMapper(typeof(MapperProfile));
 
             return services;
         }

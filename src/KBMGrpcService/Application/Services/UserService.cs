@@ -2,6 +2,7 @@
 using KBMGrpcService.Application.DTOs.User;
 using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Common.Helpers;
+using KBMGrpcService.Domain.Entities;
 using KBMGrpcService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -24,7 +25,7 @@ namespace KBMGrpcService.Application.Services
             try
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
-                var user = _mapper.Map<Domain.Entities.User>(dto);
+                var user = _mapper.Map<User>(dto);
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
                 await tx.CommitAsync();
@@ -127,7 +128,7 @@ namespace KBMGrpcService.Application.Services
                     .AnyAsync(uo => uo.UserId == userId && uo.OrganizationId == organizationId);
                 if (!exists)
                 {
-                    _context.UserOrganizations.Add(new Domain.Entities.UserOrganization { UserId = userId, OrganizationId = organizationId });
+                    _context.UserOrganizations.Add(new UserOrganization { UserId = userId, OrganizationId = organizationId });
                     await _context.SaveChangesAsync();
                 }
 

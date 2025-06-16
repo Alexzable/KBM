@@ -2,6 +2,7 @@
 using KBMGrpcService.Application.DTOs.Organization;
 using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Common.Helpers;
+using KBMGrpcService.Domain.Entities;
 using KBMGrpcService.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -25,7 +26,7 @@ namespace KBMGrpcService.Application.Services
             try
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
-                var org = _mapper.Map<Domain.Entities.Organization>(dto);
+                var org = _mapper.Map<Organization>(dto);
                 _context.Organizations.Add(org);
                 await _context.SaveChangesAsync();
                 await tx.CommitAsync();
