@@ -1,0 +1,118 @@
+﻿syntax = "proto3";
+
+package kbm;
+option csharp_namespace = "KBMGrpcService";
+
+import "google/protobuf/timestamp.proto";
+
+
+service KBMService {
+  // Organization
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse);
+  rpc GetOrganizationById(GetOrganizationByIdRequest) returns (OrganizationDto);
+  rpc QueryOrganizations(QueryRequest) returns (QueryOrganizationResponse);
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (Empty);
+  rpc DeleteOrganization(DeleteRequest) returns (Empty);
+
+  // User
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUserById(GetUserByIdRequest) returns (UserDto);
+  rpc QueryUsers(QueryRequest) returns (QueryUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (Empty);
+  rpc DeleteUser(DeleteRequest) returns (Empty);
+
+  // Association
+  rpc AssociateUser(AssociateRequest) returns (Empty);
+  rpc DisassociateUser(AssociateRequest) returns (Empty);
+  rpc QueryUsersForOrganization(QueryForOrgRequest) returns (QueryUserResponse);
+}
+
+message CreateOrganizationRequest {
+  string name = 1;
+  string address = 2;
+}
+message CreateOrganizationResponse { string id = 1; }
+
+message GetOrganizationByIdRequest { string id = 1; }
+
+message OrganizationDto {
+  string id = 1;
+  string name = 2;
+  string address = 3;
+  google.protobuf.Timestamp createdAt = 4;
+  google.protobuf.Timestamp updatedAt = 5;
+}
+
+message QueryOrganizationResponse {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int64 total = 3;
+  repeated OrganizationDto items = 4;
+}
+
+message UpdateOrganizationRequest {
+  string id = 1;
+  string name = 2;
+  string address = 3;
+}
+message DeleteRequest { string id = 1; }
+
+// === User messages ===
+message CreateUserRequest {
+  string name = 1;
+  string username = 2;
+  string email = 3;
+}
+
+message CreateUserResponse { string id = 1; }
+
+message GetUserByIdRequest { string id = 1; }
+
+message UserDto {
+  string id = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+}
+
+message QueryUserResponse {
+  int32 page = 1;
+  int32 pageSize = 2;
+  int64 total = 3;
+  repeated UserDto items = 4;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+  string username = 3;
+  string email = 4;
+}
+
+// === Association ===
+message AssociateRequest {
+  string userId = 1;
+  string organizationId = 2;
+}
+
+message QueryForOrgRequest {
+  string organizationId = 1;
+  int32 page = 2;
+  int32 pageSize = 3;
+  string orderBy = 4;
+  bool descending = 5;
+  string query = 6;
+}
+
+// === Common ===
+message QueryRequest {
+  int32 page = 1;
+  int32 pageSize = 2;
+  string orderBy = 3;
+  bool descending = 4;
+  string query = 5;
+}
+
+message Empty {}
