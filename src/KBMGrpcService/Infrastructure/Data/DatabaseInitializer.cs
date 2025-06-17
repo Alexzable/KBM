@@ -16,15 +16,19 @@ namespace KBMGrpcService.Infrastructure.Data
 
                 await context.Database.MigrateAsync();
 
+                Log.Information("**Configuration Application:** Database was successfully migrated");
+
                 var seeder = services.GetService<IDatabaseSeeder>();
                 if (seeder != null)
                 {
                     await seeder.SeedAsync(context);
+
+                    Log.Information("**Configuration Application:** Trying to synchroniz initial data from JSON files");
                 }
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "An error occurred while initializing the database");
+                Log.Error(ex, "**Configuration Application:** Error initializing database}");
                 throw;
             }
         }

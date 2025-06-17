@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
 using KBMGrpcService.Application.DTOs.Organization;
 using KBMGrpcService.Application.DTOs.User;
 using KBMGrpcService.Common.Extensions;
@@ -25,11 +26,15 @@ namespace KBMGrpcService.Common.Mapping
 
             #region user
 
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, UserMessage>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToGrpcTimestamp()))
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt.ToNullableGrpcTimestamp()));
+
             CreateMap<CreateUserDto, User>();
             CreateMap<UpdateUserDto, User>();
 
             CreateMap<CreateUserRequest, CreateUserDto>();
-            CreateMap<UserDto, UserMessage>();
             CreateMap<UpdateUserRequest, UpdateUserDto>();
 
             #endregion

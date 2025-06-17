@@ -4,6 +4,7 @@ using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Common.Helpers;
 using KBMGrpcService.Domain.Entities;
 using KBMGrpcService.Infrastructure.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -31,6 +32,11 @@ namespace KBMGrpcService.Application.Services
                 await tx.CommitAsync();
                 return user.Id;
             }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error creating user");
+                throw;
+            }
             catch (Exception ex)
             {
                 Log.Error(ex, "Error creating user");
@@ -43,9 +49,14 @@ namespace KBMGrpcService.Application.Services
             try
             {
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)            // -> remove later o.Deleted - check global filter
+                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)
                     ?? throw new KeyNotFoundException("User not found");
                 return _mapper.Map<UserDto>(user);
+            }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error fetching user by ID {UserId}", id);
+                throw;
             }
             catch (Exception ex)
             {
@@ -58,8 +69,7 @@ namespace KBMGrpcService.Application.Services
         {
             try
             {
-                var q = _context.Users
-                    .Where(u => u.DeletedAt == null);                   // -> remove later o.Deleted - check global filter
+                var q = _context.Users.Where(u => u.DeletedAt == null);
 
                 if (!string.IsNullOrEmpty(query))
                     q = q.Where(u => u.Name.Contains(query) || u.Username.Contains(query) || u.Email.Value.Contains(query));
@@ -69,6 +79,11 @@ namespace KBMGrpcService.Application.Services
                     : q.OrderBy(e => EF.Property<object>(e, orderBy));
 
                 return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+            }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error querying users");
+                throw;
             }
             catch (Exception ex)
             {
@@ -83,7 +98,7 @@ namespace KBMGrpcService.Application.Services
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == dto.Id && u.DeletedAt == null)            // -> remove later o.Deleted - check global filter
+                    .FirstOrDefaultAsync(u => u.Id == dto.Id && u.DeletedAt == null)
                     ?? throw new KeyNotFoundException("User not found");
 
                 _mapper.Map(dto, user);
@@ -91,6 +106,11 @@ namespace KBMGrpcService.Application.Services
 
                 await _context.SaveChangesAsync();
                 await tx.CommitAsync();
+            }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error updating user {UserId}", dto.Id);
+                throw;
             }
             catch (Exception ex)
             {
@@ -105,12 +125,17 @@ namespace KBMGrpcService.Application.Services
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)            // -> remove later o.Deleted - check global filter
+                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)
                     ?? throw new KeyNotFoundException("User not found");
 
                 user.DeletedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
                 await tx.CommitAsync();
+            }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error deleting user {UserId}", id);
+                throw;
             }
             catch (Exception ex)
             {
@@ -134,6 +159,11 @@ namespace KBMGrpcService.Application.Services
 
                 await tx.CommitAsync();
             }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error associating user {UserId} with organization {OrgId}", userId, organizationId);
+                throw;
+            }
             catch (Exception ex)
             {
                 Log.Error(ex, "Error associating user {UserId} with organization {OrgId}", userId, organizationId);
@@ -156,6 +186,11 @@ namespace KBMGrpcService.Application.Services
 
                 await tx.CommitAsync();
             }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error disassociating user {UserId} from organization {OrgId}", userId, organizationId);
+                throw;
+            }
             catch (Exception ex)
             {
                 Log.Error(ex, "Error disassociating user {UserId} from organization {OrgId}", userId, organizationId);
@@ -170,7 +205,7 @@ namespace KBMGrpcService.Application.Services
                 var q = _context.UserOrganizations
                     .Where(uo => uo.OrganizationId == organizationId)
                     .Select(uo => uo.User)
-                    .Where(u => u.DeletedAt == null);               // -> remove later o.Deleted - check global filter
+                    .Where(u => u.DeletedAt == null);
 
                 if (!string.IsNullOrEmpty(query))
                     q = q.Where(u => u.Name.Contains(query));
@@ -180,6 +215,11 @@ namespace KBMGrpcService.Application.Services
                     : q.OrderBy(e => EF.Property<object>(e, orderBy));
 
                 return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+            }
+            catch (SqlException ex)
+            {
+                Log.Error(ex, "SQL error querying users for organization {OrgId}", organizationId);
+                throw;
             }
             catch (Exception ex)
             {

@@ -22,11 +22,13 @@ namespace KBMGrpcService.Grpc.Interceptors
             {
                 throw;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 Log.Error(ex, "GRPC Error: {Method}", context.Method);
                 throw new RpcException(new Status(StatusCode.Internal, "Internal server error"));
             }
         }
     }
+
+
 }

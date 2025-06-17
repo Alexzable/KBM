@@ -14,6 +14,6 @@ namespace KBMHttpService.Common.Helpers
 
         public bool Descending { get; set; } = false;
 
-        public string? QueryString { get; set; }
+        public string? QueryString { get; set; } = "";
     }
 }

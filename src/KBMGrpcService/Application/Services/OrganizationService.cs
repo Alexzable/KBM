@@ -63,7 +63,7 @@ namespace KBMGrpcService.Application.Services
                     .Where(o => o.DeletedAt == null);            // -> remove later o.Deleted - check global filter
 
                 if (!string.IsNullOrEmpty(query))
-                    q = q.Where(o => o.Name.Contains(query) || o.Address.Contains(query));
+                    q = q.Where(o => o.Name.Contains(query) || (o.Address != null && o.Address.Contains(query)));
 
                 q = descending
                     ? q.OrderByDescending(e => EF.Property<object>(e, orderBy))

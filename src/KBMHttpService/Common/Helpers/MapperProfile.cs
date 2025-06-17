@@ -6,9 +6,9 @@ using KBMHttpService.API.Features.User.Models.Responses;
 
 namespace KBMHttpService.Common.Helpers
 {
-    public class MappingExtensions : Profile
+    public class MapperProfile : Profile
     {
-        public MappingExtensions()
+        public MapperProfile()
         {
 
             #region User

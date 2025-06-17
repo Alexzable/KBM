@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Protobuf.WellKnownTypes;
 using System.Reflection;
 
 namespace KBMGrpcService.Common.Extensions
@@ -23,6 +24,22 @@ namespace KBMGrpcService.Common.Extensions
                 }
             }
             return expression;
+        }
+
+        internal static Timestamp ToGrpcTimestamp(this DateTime dateTime)
+            => Timestamp.FromDateTime(DateTime.SpecifyKind(dateTime, DateTimeKind.Utc));
+
+        internal static Timestamp? ToNullableGrpcTimestamp(this DateTime? dateTime)
+            => dateTime.HasValue ? Timestamp.FromDateTime(DateTime.SpecifyKind(dateTime.Value, DateTimeKind.Utc)) : null;
+
+        internal static DateTime ToDateTime(this Timestamp timestamp)
+        {
+            return timestamp.ToDateTime();
+        }
+
+        internal static DateTime? ToNullableDateTime(this Timestamp? timestamp)
+        {
+            return timestamp != null ? timestamp.ToDateTime() : (DateTime?)null;
         }
 
     }
