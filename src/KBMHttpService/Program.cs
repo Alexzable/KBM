@@ -1,9 +1,20 @@
+using KBMGrpcService.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddGrpcClient<UserService.UserServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["Grpc:KBMGrpcServiceUrl"]);
+});
+builder.Services.AddGrpcClient<OrganizationService.OrganizationServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["Grpc:KBMGrpcServiceUrl"]);
+});
 
 var app = builder.Build();
 

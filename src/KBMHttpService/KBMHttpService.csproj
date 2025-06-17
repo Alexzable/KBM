@@ -6,11 +6,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
+  
+    <ItemGroup>
+      <Protobuf Include="..\KBMGrpcService\Protos\user.proto" GrpcServices="Client" />
+      <Protobuf Include="..\KBMGrpcService\Protos\organization.proto" GrpcServices="Client" />
+    </ItemGroup>
+  
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation" Version="11.6.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.31.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.58.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.72.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
@@ -18,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="API\Features\User\Models\Responses\" />
     <Folder Include="Clients\Grpc\User\Protos\" />
   </ItemGroup>
 

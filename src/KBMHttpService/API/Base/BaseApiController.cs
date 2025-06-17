@@ -1,6 +1,10 @@
-﻿namespace KBMHttpService.API.Base
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace KBMHttpService.API.Base
 {
-    public class BaseApiController
+    [ApiController]
+    [Route("api/[controller]")]
+    public abstract class BaseApiController : ControllerBase
     {
     }
 }
