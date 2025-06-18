@@ -19,6 +19,9 @@ namespace KBMGrpcService.Common.Exceptions
                 SqlException sqlEx =>
                     new RpcException(new Status(StatusCode.Internal, "Database error: " + sqlEx.Message)),
 
+                ArgumentException argEx =>
+                    new RpcException(new Status(StatusCode.InvalidArgument, argEx.Message)),
+
                 _ =>
                     new RpcException(new Status(StatusCode.Unknown, "Unexpected error: " + ex.Message))
             };

@@ -35,7 +35,7 @@ message QueryOrganizationsRequest {
   int32 pageSize = 2;
   string orderBy = 3;
   bool descending = 4;
-  string query = 5;
+  string queryString = 5;
 }
 
 message QueryOrganizationsReply {

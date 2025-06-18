@@ -15,11 +15,15 @@ namespace KBMGrpcService.Common.Mapping
 
             #region organization
 
+            CreateMap<Organization, OrganizationDto>();
+            CreateMap<OrganizationDto, OrganizationMessage>()
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt.ToGrpcTimestamp()))
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt.ToNullableGrpcTimestamp()));
+
             CreateMap<CreateOrganizationDto, Organization>();
             CreateMap<UpdateOrganizationDto, Organization>();
 
             CreateMap<CreateOrganizationRequest, CreateOrganizationDto>();
-            CreateMap<OrganizationDto, OrganizationMessage>();
             CreateMap<UpdateOrganizationRequest, UpdateOrganizationDto>();
 
             #endregion

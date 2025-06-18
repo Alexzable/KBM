@@ -37,7 +37,7 @@ message QueryUsersRequest {
   int32 pageSize = 2;
   string orderBy = 3;
   bool descending = 4;
-  string query = 5;
+  string queryString = 5;
 }
 
 message QueryUsersReply {
@@ -69,7 +69,7 @@ message QueryUsersForOrganizationRequest {
   int32 pageSize = 3;
   string orderBy = 4;
   bool descending = 5;
-  string query = 6;
+  string queryString = 6;
 }
 
 

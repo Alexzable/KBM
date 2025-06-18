@@ -32,9 +32,22 @@ namespace KBMGrpcService.Application.Services
                 await tx.CommitAsync();
                 return user.Id;
             }
-            catch (SqlException ex)
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx)
             {
-                Log.Error(ex, "SQL error creating user");
+                if (sqlEx.Number is 2601 or 2627)
+                {
+                    var message = sqlEx.Message.ToLower();
+
+                    if (message.Contains("email"))
+                        throw new ArgumentException("A user with this email already exists.", nameof(dto.Email));
+
+                    if (message.Contains("name"))
+                        throw new ArgumentException("A user with this name already exists.", nameof(dto.Name));
+
+                    throw new ArgumentException("A user with duplicate data already exists.");
+                }
+
+                Log.Error(sqlEx, "SQL error creating user");
                 throw;
             }
             catch (Exception ex)
@@ -49,7 +62,7 @@ namespace KBMGrpcService.Application.Services
             try
             {
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)
+                    .FirstOrDefaultAsync(u => u.Id == id)
                     ?? throw new KeyNotFoundException("User not found");
                 return _mapper.Map<UserDto>(user);
             }
@@ -69,10 +82,18 @@ namespace KBMGrpcService.Application.Services
         {
             try
             {
-                var q = _context.Users.Where(u => u.DeletedAt == null);
+                IQueryable<User> q = _context.Users;
 
                 if (!string.IsNullOrEmpty(query))
                     q = q.Where(u => u.Name.Contains(query) || u.Username.Contains(query) || u.Email.Value.Contains(query));
+
+                orderBy = char.ToUpper(orderBy[0]) + orderBy[1..];
+
+                var userProperties = typeof(User).GetProperties().Select(p => p.Name);
+                if (!userProperties.Contains(orderBy))
+                {
+                    throw new ArgumentException($"Invalid orderBy field '{orderBy}'", nameof(orderBy));
+                }
 
                 q = descending
                     ? q.OrderByDescending(e => EF.Property<object>(e, orderBy))
@@ -98,7 +119,7 @@ namespace KBMGrpcService.Application.Services
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == dto.Id && u.DeletedAt == null)
+                    .FirstOrDefaultAsync(u => u.Id == dto.Id)
                     ?? throw new KeyNotFoundException("User not found");
 
                 _mapper.Map(dto, user);
@@ -125,7 +146,7 @@ namespace KBMGrpcService.Application.Services
             {
                 await using var tx = await _context.Database.BeginTransactionAsync();
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(u => u.Id == id && u.DeletedAt == null)
+                    .FirstOrDefaultAsync(u => u.Id == id)
                     ?? throw new KeyNotFoundException("User not found");
 
                 user.DeletedAt = DateTime.UtcNow;
@@ -204,8 +225,7 @@ namespace KBMGrpcService.Application.Services
             {
                 var q = _context.UserOrganizations
                     .Where(uo => uo.OrganizationId == organizationId)
-                    .Select(uo => uo.User)
-                    .Where(u => u.DeletedAt == null);
+                    .Select(uo => uo.User);
 
                 if (!string.IsNullOrEmpty(query))
                     q = q.Where(u => u.Name.Contains(query));

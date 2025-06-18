@@ -14,12 +14,10 @@ namespace KBMHttpService.Common.Helpers
             #region User
 
             CreateMap<CreateUserRequest, KBMGrpcService.Grpc.CreateUserRequest>();
-            CreateMap<UsersRequest, KBMGrpcService.Grpc.QueryUsersRequest>()
-                .ForMember(dst => dst.Query, opt => opt.MapFrom(src => src.QueryString));
+            CreateMap<UsersRequest, KBMGrpcService.Grpc.QueryUsersRequest>();
             CreateMap<UpdateUserRequest, KBMGrpcService.Grpc.UpdateUserRequest>();
             CreateMap<AssociateUserRequest, KBMGrpcService.Grpc.AssociateUserRequest>();
-            CreateMap<UsersForOrganizationRequest, KBMGrpcService.Grpc.QueryUsersForOrganizationRequest>()
-                .ForMember(dst => dst.Query, opt => opt.MapFrom(src => src.QueryString));
+            CreateMap<UsersForOrganizationRequest, KBMGrpcService.Grpc.QueryUsersForOrganizationRequest>();
 
             CreateMap<KBMGrpcService.Grpc.CreateUserReply, CreateUserResponse>()
                 .ForMember(dst => dst.Id, opt => opt.MapFrom(src => Guid.Parse(src.Id)));
@@ -34,8 +32,7 @@ namespace KBMHttpService.Common.Helpers
             #region Organization
 
             CreateMap<CreateOrganizationRequest, KBMGrpcService.Grpc.CreateOrganizationRequest>();
-            CreateMap<OrganizationsRequest, KBMGrpcService.Grpc.QueryOrganizationsRequest>()
-                .ForMember(d => d.Query, o => o.MapFrom(s => s.QueryString));
+            CreateMap<OrganizationsRequest, KBMGrpcService.Grpc.QueryOrganizationsRequest>();
             CreateMap<UpdateOrganizationRequest, KBMGrpcService.Grpc.UpdateOrganizationRequest>();
 
             CreateMap<KBMGrpcService.Grpc.CreateOrganizationReply, CreateOrganizationResponse>()

@@ -50,7 +50,7 @@ namespace KBMGrpcService.Grpc.Handlers
         {
             try
             {
-                var result = await _userService.QueryAsync(request.Page, request.PageSize, request.OrderBy, request.Descending, request.Query);
+                var result = await _userService.QueryAsync(request.Page, request.PageSize, request.OrderBy, request.Descending, request.QueryString);
 
                 var reply = new QueryUsersReply
                 {
@@ -130,7 +130,7 @@ namespace KBMGrpcService.Grpc.Handlers
             try
             {
                 var result = await _userService.QueryForOrganizationAsync(
-                    Guid.Parse(request.OrganizationId), request.Page, request.PageSize, request.OrderBy, request.Descending, request.Query);
+                    Guid.Parse(request.OrganizationId), request.Page, request.PageSize, request.OrderBy, request.Descending, request.QueryString);
 
                 var reply = new QueryUsersReply
                 {
