@@ -128,4 +128,6 @@ SQL password is configured via .env
 
 All commands work offline once Docker image is pulled
 
+Setup HTTPS dev cert - dotnet dev-certs https --trust
+
 For detailed architecture or flow diagrams, see docs/illustrations/.
