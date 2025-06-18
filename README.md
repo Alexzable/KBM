@@ -63,6 +63,7 @@ Simulate data exchange between gRPC and HTTP
 
 📁 Project Structure
 
+```
 KBM/
 ├── src/
 │   ├── KBMGrpcService/
@@ -86,6 +87,8 @@ KBM/
     │   └── script-definition.txt
     └── project/
         └── project-overview.docx
+```
+
 
 
 📄 Documentation
