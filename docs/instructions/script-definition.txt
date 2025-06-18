@@ -1,0 +1,48 @@
+1. run_app.bat
+
+🔹 Main entry point to launch the full development environment
+
+Steps performed:
+
+Checks if a SQL Server container (sqlserver) is already running
+
+If not, calls run_sqlserver_docker.bat with no-wait argument to set up Docker environment
+
+Sets the USE_DOCKER_DB=true environment variable so the .NET services connect to the Docker-based SQL Server
+
+Starts two services in separate terminal windows:
+
+KBMGrpcService
+
+KBMHttpService
+
+Waits for user input (X) to stop Docker container (but not the services)
+
+2. run_sqlserver_docker.bat
+
+🔹 Handles launching and managing the Docker container for SQL Server
+
+Steps performed:
+
+Checks if Docker CLI is available (where docker)
+
+Verifies if Docker Desktop is running; if not, attempts to launch it
+
+Executes docker-compose up -d to run the SQL Server container in detached mode
+
+If called with no-wait, exits immediately after launching container
+
+Otherwise, waits for user input (X) to shut down the container using docker-compose down
+
+Exits with appropriate error code if Docker is not found, startup fails, or shutdown fails
+
+Additional Details
+
+Both scripts assume:
+
+Docker image is pulled or available locally: mcr.microsoft.com/mssql/server:2017-latest
+
+The container name in docker-compose.yml is explicitly set to sqlserver
+
+.env file contains required credentials like SA_PASSWORD
+

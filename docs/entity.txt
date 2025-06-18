@@ -1,7 +1,0 @@
-Commands: 
-
-1. Add migration
-// Add-Migration NameMigration -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir Infrastructure/Data/Migrations
-
-2. Update Database
-// Update-Database -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir

@@ -1,0 +1,77 @@
+Used Libraries in .NET Projects (GRPC Server + GRPC Client)
+============================================================
+
+──────────────────────────────
+🔹 Project 1: KBMGrpcService (Server-side)
+──────────────────────────────
+
+1. AutoMapper.Extensions.Microsoft.DependencyInjection
+   → Integrates AutoMapper with ASP.NET Core's DI system. Used for mapping between models and DTOs.
+
+2. FluentValidation
+   → Provides a fluent interface for model validation.
+
+3. Google.Protobuf
+   → Core library for handling Protocol Buffers (required for gRPC).
+
+4. Grpc.AspNetCore
+   → Enables building gRPC services on ASP.NET Core.
+
+5. Grpc.Tools
+   → Used at build time to compile `.proto` files into C# classes.
+
+6. Microsoft.EntityFrameworkCore.Design
+   → Provides EF Core design-time tools (used for migrations).
+
+7. Microsoft.EntityFrameworkCore.SqlServer
+   → EF Core provider for SQL Server.
+
+8. Microsoft.EntityFrameworkCore.Tools
+   → Command-line tools for managing EF Core migrations and database updates.
+
+9. Serilog.AspNetCore
+   → Structured logging integration for ASP.NET Core apps.
+
+10. Serilog.Sinks.Console
+    → Enables output of Serilog logs to the console.
+
+──────────────────────────────
+🔹 Project 2: KBMWebClient (Client-side)
+──────────────────────────────
+
+1. AutoMapper.Extensions.Microsoft.DependencyInjection
+   → Same as above, used for mapping in the client context.
+
+2. FluentValidation
+   → Input/model validation on the client side.
+
+3. Google.Protobuf
+   → Required for deserializing gRPC messages.
+
+4. Grpc.Net.Client
+   → Enables gRPC client capabilities in .NET.
+
+5. Grpc.Net.ClientFactory
+   → Integrates gRPC clients with ASP.NET Core's IHttpClientFactory.
+
+6. Grpc.Tools
+   → Same as on the server side, for building C# code from `.proto` files.
+
+7. Microsoft.AspNetCore.Authentication.JwtBearer
+   → JWT Bearer authentication middleware (for securing endpoints).
+
+8. Microsoft.AspNetCore.OpenApi
+   → Enables minimal OpenAPI/Swagger support.
+
+9. Serilog.AspNetCore
+   → Structured logging integration (same as in server).
+
+10. Swashbuckle.AspNetCore
+    → Adds Swagger/OpenAPI generation and UI for ASP.NET Core APIs.
+
+──────────────────────────────
+
+🗂 Notes:
+- Both projects use shared `.proto` files to define gRPC contracts.
+- Grpc.Tools is marked as `PrivateAssets=all` → it’s only used during build, not published.
+

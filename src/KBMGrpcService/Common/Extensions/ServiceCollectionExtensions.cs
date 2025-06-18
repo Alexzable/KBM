@@ -11,7 +11,11 @@ namespace KBMGrpcService.Common.Extensions
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var useDocker = Environment.GetEnvironmentVariable("USE_DOCKER_DB")?.ToLowerInvariant() == "true";
+
+            var connectionName = useDocker ? "DockerDefaultConnection" : "LocalDefaultConnection";
+            var connectionString = configuration.GetConnectionString(connectionName);
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
 

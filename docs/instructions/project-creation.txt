@@ -1,0 +1,38 @@
+Project Initialization – .NET Solution with gRPC and WebAPI
+============================================================
+
+1. Create the root folder and initialize Git
+--------------------------------------------
+
+Create a base folder for the solution and initialize a Git repository:
+
+    mkdir KBM
+    cd KBM
+    git init
+
+
+2. Create the .NET solution file
+--------------------------------
+
+Initialize a new solution named "KBM":
+
+    dotnet new sln -n KBM
+
+
+3. Create the projects
+----------------------
+
+Generate a gRPC service and a WebAPI service in the `src` directory:
+
+    dotnet new grpc -o src/KBMGrpcService
+    dotnet new webapi -o src/KBMHttpService
+
+
+4. Add the projects to the solution
+-----------------------------------
+
+Register the projects inside the solution:
+
+    dotnet sln add src/KBMGrpcService/KBMGrpcService.csproj
+    dotnet sln add src/KBMHttpService/KBMHttpService.csproj
+

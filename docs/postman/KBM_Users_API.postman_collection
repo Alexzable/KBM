@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "a713484d-28ff-4861-8da6-2ce206e076b1",
+		"name": "KBM Users API",
+		"description": "Includes valid and error-triggering request examples for the KBM gRPC-powered Users API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "✅ Testing Endpoints",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alex\",\n  \"username\": \"alex123\",\n  \"email\": \"alex@yahoo.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:6000/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"11a8b72c-dc28-4cc3-068b-08ddae295f61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users?page=1&pageSize=5&orderBy=name&descending=false&queryString=",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "orderBy",
+									"value": "name"
+								},
+								{
+									"key": "descending",
+									"value": "false"
+								},
+								{
+									"key": "queryString",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Alex Updated\",\n  \"username\": \"alex456\",\n  \"email\": \"alex.new@yahoo.com\"\n}"
+						},
+						"url": {
+							"raw": "localhost:6000/api/users/b272f921-640a-4544-d429-08ddae26a7d3",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"b272f921-640a-4544-d429-08ddae26a7d3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"11a8b72c-dc28-4cc3-068b-08ddae295f61"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Associate User to Org",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61/organizations/8E9A2942-7AC6-4AE0-E942-08DDACD43832",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"11a8b72c-dc28-4cc3-068b-08ddae295f61",
+								"organizations",
+								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disassociate User from Org",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61/organizations/8E9A2942-7AC6-4AE0-E942-08DDACD43832",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"11a8b72c-dc28-4cc3-068b-08ddae295f61",
+								"organizations",
+								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query Users for Org",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:6000/api/users/organization/8E9A2942-7AC6-4AE0-E942-08DDACD43832?page=1&pageSize=5&orderBy=email&descending=true&query=",
+							"host": [
+								"localhost"
+							],
+							"port": "6000",
+							"path": [
+								"api",
+								"users",
+								"organization",
+								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								},
+								{
+									"key": "orderBy",
+									"value": "email"
+								},
+								{
+									"key": "descending",
+									"value": "true"
+								},
+								{
+									"key": "query",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,70 @@
+Entity Framework Core – Useful Commands for .NET Projects
+==========================================================
+
+1. Add a Migration
+------------------
+
+Add a new migration with a descriptive name.
+
+    Add-Migration MigrationName -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir Infrastructure/Data/Migrations
+
+Example:
+
+    Add-Migration AddUserTable -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir Infrastructure/Data/Migrations
+
+
+2. Update the Database
+-----------------------
+
+Apply the latest migration(s) to the database.
+
+    Update-Database -Project KBMGrpcService -StartupProject KBMGrpcService
+
+
+3. Remove Last Migration
+-------------------------
+
+Removes the last migration (only if not applied to database).
+
+    Remove-Migration -Project KBMGrpcService -StartupProject KBMGrpcService
+
+
+4. Scaffold DB from Existing Database
+--------------------------------------
+
+Generate models and DbContext from an existing database (reverse engineer).
+
+    Scaffold-DbContext "Your_Connection_String_Here" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Infrastructure/Data/Models -Context AppDbContext -Project KBMGrpcService -StartupProject KBMGrpcService -Force
+
+
+5. List Applied Migrations
+---------------------------
+
+Check which migrations were already applied:
+
+    Get-Migrations -Project KBMGrpcService -StartupProject KBMGrpcService
+
+
+6. List Pending Migrations
+---------------------------
+
+List migrations that haven’t been applied yet:
+
+    Get-PendingMigrations -Project KBMGrpcService -StartupProject KBMGrpcService
+
+
+7. Revert to a Specific Migration
+----------------------------------
+
+Roll back the database to a specific migration:
+
+    Update-Database MigrationName -Project KBMGrpcService -StartupProject KBMGrpcService
+
+
+8. Drop the Database
+---------------------
+
+Delete the current database:
+
+    Drop-Database -Project KBMGrpcService -StartupProject KBMGrpcService -Force
+
