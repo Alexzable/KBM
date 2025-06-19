@@ -7,48 +7,34 @@ using KBMGrpcService.Common.Exceptions;
 
 namespace KBMGrpcService.Grpc.Handlers
 {
-    public class UserController : UserService.UserServiceBase
+    public class UserController(IUserService userService, IMapper mapper) : UserService.UserServiceBase
     {
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
+        private readonly IUserService _userService = userService;
+        private readonly IMapper _mapper = mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public override Task<CreateUserReply> CreateUser(CreateUserRequest request, ServerCallContext context)
         {
-            _userService = userService;
-            _mapper = mapper;
-        }
-
-        public override async Task<CreateUserReply> CreateUser(CreateUserRequest request, ServerCallContext context)
-        {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = _mapper.Map<CreateUserDto>(request);
                 var id = await _userService.CreateAsync(appDto);
                 return new CreateUserReply { Id = id.ToString() };
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "CreateUser", new { request.Email, request.Name });
         }
 
-        public override async Task<GetUserByIdReply> GetUserById(GetUserByIdRequest request, ServerCallContext context)
+        public override Task<GetUserByIdReply> GetUserById(GetUserByIdRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = await _userService.GetByIdAsync(Guid.Parse(request.Id));
                 var grpcDto = _mapper.Map<UserMessage>(appDto);
                 return new GetUserByIdReply { User = grpcDto };
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "GetUserById", new { request.Id });
         }
 
-        public override async Task<QueryUsersReply> QueryUsers(QueryUsersRequest request, ServerCallContext context)
+        public override Task<QueryUsersReply> QueryUsers(QueryUsersRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var result = await _userService.QueryAsync(request.Page, request.PageSize, request.OrderBy, request.Descending, request.QueryString);
 
@@ -59,78 +45,53 @@ namespace KBMGrpcService.Grpc.Handlers
                     Total = result.Total
                 };
 
-                foreach (var appDto in result.Items)
-                {
-                    reply.Items.Add(_mapper.Map<UserMessage>(appDto));
-                }
-
+                reply.Items.AddRange(result.Items.Select(_mapper.Map<UserMessage>));
                 return reply;
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "QueryUsers", new { request.Page, request.PageSize, request.OrderBy });
         }
 
-        public override async Task<Empty> UpdateUser(UpdateUserRequest request, ServerCallContext context)
+        public override Task<Empty> UpdateUser(UpdateUserRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = _mapper.Map<UpdateUserDto>(request);
                 await _userService.UpdateAsync(appDto);
-                return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "UpdateUser", new { request.Id }).ContinueWith(_ => new Empty());
         }
 
-        public override async Task<Empty> DeleteUser(DeleteUserRequest request, ServerCallContext context)
+        public override Task<Empty> DeleteUser(DeleteUserRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 await _userService.DeleteAsync(Guid.Parse(request.Id));
-                return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "DeleteUser", new { request.Id }).ContinueWith(_ => new Empty());
         }
 
-        public override async Task<Empty> AssociateUser(AssociateUserRequest request, ServerCallContext context)
+        public override Task<Empty> AssociateUser(AssociateUserRequest request, ServerCallContext context)
         {
-            try
-            {
-                await _userService.AssociateAsync(Guid.Parse(request.UserId), Guid.Parse(request.OrganizationId));
-                return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            return GrpcCustomError.TryCatchAsync(() =>
+                _userService.AssociateAsync(Guid.Parse(request.UserId), Guid.Parse(request.OrganizationId)),
+                "AssociateUser", new { request.UserId, request.OrganizationId }).ContinueWith(_ => new Empty());
         }
 
-        public override async Task<Empty> DisassociateUser(AssociateUserRequest request, ServerCallContext context)
+        public override Task<Empty> DisassociateUser(AssociateUserRequest request, ServerCallContext context)
         {
-            try
-            {
-                await _userService.DisassociateAsync(Guid.Parse(request.UserId), Guid.Parse(request.OrganizationId));
-                return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            return GrpcCustomError.TryCatchAsync(() =>
+                _userService.DisassociateAsync(Guid.Parse(request.UserId), Guid.Parse(request.OrganizationId)),
+                "DisassociateUser", new { request.UserId, request.OrganizationId }).ContinueWith(_ => new Empty());
         }
 
-        public override async Task<QueryUsersReply> QueryUsersForOrganization(QueryUsersForOrganizationRequest request, ServerCallContext context)
+        public override Task<QueryUsersReply> QueryUsersForOrganization(QueryUsersForOrganizationRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var result = await _userService.QueryForOrganizationAsync(
-                    Guid.Parse(request.OrganizationId), request.Page, request.PageSize, request.OrderBy, request.Descending, request.QueryString);
+                    Guid.Parse(request.OrganizationId),
+                    request.Page,
+                    request.PageSize,
+                    request.OrderBy,
+                    request.Descending,
+                    request.QueryString);
 
                 var reply = new QueryUsersReply
                 {
@@ -139,17 +100,9 @@ namespace KBMGrpcService.Grpc.Handlers
                     Total = result.Total
                 };
 
-                foreach (var appDto in result.Items)
-                {
-                    reply.Items.Add(_mapper.Map<UserMessage>(appDto));
-                }
-
+                reply.Items.AddRange(result.Items.Select(_mapper.Map<UserMessage>));
                 return reply;
-            }
-            catch (Exception ex)
-            {
-                throw GrpcCustomError.FromException(ex);
-            }
+            }, "QueryUsersForOrganization", new { request.OrganizationId, request.Page, request.PageSize });
         }
     }
 }
