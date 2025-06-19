@@ -5,7 +5,6 @@ using KBMGrpcService.Common.Exceptions;
 using KBMGrpcService.Common.Extensions;
 using KBMGrpcService.Common.Helpers;
 using KBMGrpcService.Entities;
-using KBMGrpcService.Infrastructure.Data;
 using KBMGrpcService.Repository;
 
 namespace KBMGrpcService.Application.Services

@@ -7,7 +7,7 @@ using KBMGrpcService.Common.Exceptions;
 
 namespace KBMGrpcService.Grpc.Handlers
 {
-    public class UserController(IUserService userService, IMapper mapper) : UserService.UserServiceBase
+    public class UsersController(IUserService userService, IMapper mapper) : UserService.UserServiceBase
     {
         private readonly IUserService _userService = userService;
         private readonly IMapper _mapper = mapper;

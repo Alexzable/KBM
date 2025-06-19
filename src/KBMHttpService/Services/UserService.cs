@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Grpc.Core;
+using KBMGrpcService.Grpc;
 using KBMHttpService.Common;
 using KBMHttpService.Common.Exceptions;
 using KBMHttpService.DTOs.User;
@@ -7,124 +7,86 @@ using KBMHttpService.Services.Interfaces;
 
 namespace KBMHttpService.Services
 {
-    public class UserService : IUserService
+    public class UserService(KBMGrpcService.Grpc.UserService.UserServiceClient client, IMapper mapper, ILogger<UserService> logger) : IUserService
     {
-        private readonly KBMGrpcService.Grpc.UserService.UserServiceClient _client;
-        private readonly IMapper _mapper;
-        private readonly ILogger<UserService> _logger;
-
-
-        public UserService(KBMGrpcService.Grpc.UserService.UserServiceClient client, IMapper mapper, ILogger<UserService> logger)
-        {
-            _client = client;
-            _mapper = mapper;
-            _logger = logger;
-        }
+        private readonly KBMGrpcService.Grpc.UserService.UserServiceClient _client = client;
+        private readonly IMapper _mapper = mapper;
+        private readonly ILogger<UserService> _logger = logger;
 
         public async Task<Guid> CreateUserAsync(CreateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.CreateUserRequest>(request), _logger);
-            try
-            {
-                var reply = await _client.CreateUserAsync(protoReq);
-                return _mapper.Map<ResultId<Guid>>(reply).Id;
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Failed to create user.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<CreateUserRequest>(request), _logger);
+
+            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.CreateUserAsync(protoReq).ResponseAsync,
+                "CreateUser", _logger);
+
+            return _mapper.Map<ResultId<Guid>>(reply).Id;
         }
 
         public async Task<UserDto> GetUserByIdAsync(Guid id)
         {
-            try
-            {
-                var reply = await _client.GetUserByIdAsync(new KBMGrpcService.Grpc.GetUserByIdRequest { Id = id.ToString() });
-                return _mapper.Map<UserDto>(reply.User);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Failed to get user.", ex);
-            }
+            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.GetUserByIdAsync(new GetUserByIdRequest { Id = id.ToString() }).ResponseAsync,
+                "GetUserById", _logger);
+
+            return _mapper.Map<UserDto>(reply.User);
         }
 
         public async Task<UserListDto> QueryUsersAsync(UserListParamsDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.QueryUsersRequest>(request), _logger);
-            try
-            {
-                var reply = await _client.QueryUsersAsync(protoReq);
-                return _mapper.Map<UserListDto>(reply);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("User query failed.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<QueryUsersRequest>(request), _logger);
+
+            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.QueryUsersAsync(protoReq).ResponseAsync,
+                "QueryUsers", _logger);
+
+            return _mapper.Map<UserListDto>(reply);
         }
 
         public async Task UpdateUserAsync(UpdateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.UpdateUserRequest>(request), _logger);
-            try
-            {
-                await _client.UpdateUserAsync(protoReq);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Update failed.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<UpdateUserRequest>(request), _logger);
+
+            await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.UpdateUserAsync(protoReq).ResponseAsync,
+                "UpdateUser", _logger);
         }
 
         public async Task DeleteUserAsync(Guid id)
         {
-            try
-            {
-                await _client.DeleteUserAsync(new KBMGrpcService.Grpc.DeleteUserRequest { Id = id.ToString() });
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Delete failed.", ex);
-            }
+            await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.DeleteUserAsync(new DeleteUserRequest { Id = id.ToString() }).ResponseAsync,
+                "DeleteUser", _logger);
         }
 
         public async Task AssociateUserAsync(AssociateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.AssociateUserRequest>(request), _logger);
-            try
-            {
-                await _client.AssociateUserAsync(protoReq);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Associate failed.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<AssociateUserRequest>(request), _logger);
+
+            await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.AssociateUserAsync(protoReq).ResponseAsync,
+                "AssociateUser", _logger);
         }
 
         public async Task DisassociateUserAsync(AssociateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.AssociateUserRequest>(request), _logger);
-            try
-            {
-                await _client.DisassociateUserAsync(protoReq);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Disassociate failed.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<AssociateUserRequest>(request), _logger);
+
+            await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.DisassociateUserAsync(protoReq).ResponseAsync,
+                "DisassociateUser", _logger);
         }
 
         public async Task<UserListDto> QueryUsersForOrganizationAsync(UsersForOrganizationDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<KBMGrpcService.Grpc.QueryUsersForOrganizationRequest>(request), _logger);
-            try
-            {
-                var reply = await _client.QueryUsersForOrganizationAsync(protoReq);
-                return _mapper.Map<UserListDto>(reply);
-            }
-            catch (RpcException ex)
-            {
-                throw new ExternalServiceException("Organization user query failed.", ex);
-            }
+            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<QueryUsersForOrganizationRequest>(request), _logger);
+
+            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
+                () => _client.QueryUsersForOrganizationAsync(protoReq).ResponseAsync,
+                "QueryUsersForOrganization", _logger);
+
+            return _mapper.Map<UserListDto>(reply);
         }
     }
 }

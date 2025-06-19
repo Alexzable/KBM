@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KBMHttpService.Common.Exceptions
@@ -25,6 +26,48 @@ namespace KBMHttpService.Common.Exceptions
                 ValidationException ve => new BadRequestObjectResult(new { errors = ve.Errors }),
                 _ => new ObjectResult(new ErrorResponse("Unexpected server error.")) { StatusCode = 500 }
             };
+        }
+
+        public static async Task<IActionResult> TryCatchAsync(
+               Func<Task<IActionResult>> action,
+               ILogger logger,
+               string context)
+        {
+            try
+            {
+                return await action();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "{Context} failed", context);
+                return HandleException(ex);
+            }
+        }
+
+        public static async Task<T> ExecuteGrpcCallAsync<T>(Func<Task<T>> action, string context, ILogger logger)
+        {
+            try
+            {
+                return await action();
+            }
+            catch (RpcException ex)
+            {
+                logger.LogError(ex, "gRPC call failed in {Context}", context);
+                throw new ExternalServiceException($"{context} failed.", ex);
+            }
+        }
+
+        public static async Task ExecuteGrpcCallAsync(Func<Task> action, string context, ILogger logger)
+        {
+            try
+            {
+                await action();
+            }
+            catch (RpcException ex)
+            {
+                logger.LogError(ex, "gRPC call failed in {Context}", context);
+                throw new ExternalServiceException($"{context} failed.", ex);
+            }
         }
     }
 }
