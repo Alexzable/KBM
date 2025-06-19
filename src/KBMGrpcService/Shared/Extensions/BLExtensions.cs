@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
+using KBMGrpcService.Common.Helpers;
 using System.Reflection;
 
 namespace KBMGrpcService.Common.Extensions
@@ -32,15 +33,19 @@ namespace KBMGrpcService.Common.Extensions
         internal static Timestamp? ToNullableGrpcTimestamp(this DateTime? dateTime)
             => dateTime.HasValue ? Timestamp.FromDateTime(DateTime.SpecifyKind(dateTime.Value, DateTimeKind.Utc)) : null;
 
-        internal static DateTime ToDateTime(this Timestamp timestamp)
+        internal static PaginatedList<TResult> Map<TSource, TResult>(
+                 this PaginatedList<TSource> source,
+                 Func<TSource, TResult> converter)
         {
-            return timestamp.ToDateTime();
+            return new PaginatedList<TResult>
+            {
+                Page = source.Page,
+                PageSize = source.PageSize,
+                Total = source.Total,
+                Items = source.Items.Select(converter).ToList()
+            };
         }
 
-        internal static DateTime? ToNullableDateTime(this Timestamp? timestamp)
-        {
-            return timestamp != null ? timestamp.ToDateTime() : (DateTime?)null;
-        }
 
     }
 }

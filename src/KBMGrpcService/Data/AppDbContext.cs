@@ -1,4 +1,4 @@
-﻿using KBMGrpcService.Domain.Entities;
+﻿using KBMGrpcService.Entities;
 using KBMGrpcService.Infrastructure.Configurations;
 using KBMGrpcService.Infrastructure.Data.Filters;
 using Microsoft.EntityFrameworkCore;

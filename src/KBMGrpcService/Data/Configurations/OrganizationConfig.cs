@@ -1,6 +1,6 @@
-﻿using KBMGrpcService.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using KBMGrpcService.Entities;
 
 namespace KBMGrpcService.Infrastructure.Configurations
 {

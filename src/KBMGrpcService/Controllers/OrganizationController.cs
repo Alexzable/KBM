@@ -7,12 +7,12 @@ using KBMGrpcService.Common.Exceptions;
 
 namespace KBMGrpcService.Grpc.Handlers
 {
-    public class OrganizationHandler : OrganizationService.OrganizationServiceBase
+    public class OrganizationController : OrganizationService.OrganizationServiceBase
     {
         private readonly IOrganizationService _orgService;
         private readonly IMapper _mapper;
 
-        public OrganizationHandler(IOrganizationService orgService, IMapper mapper)
+        public OrganizationController(IOrganizationService orgService, IMapper mapper)
         {
             _orgService = orgService;
             _mapper = mapper;

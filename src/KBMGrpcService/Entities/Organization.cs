@@ -1,6 +1,6 @@
 ﻿using KBMGrpcService.Domain.Base;
 
-namespace KBMGrpcService.Domain.Entities
+namespace KBMGrpcService.Entities
 {
     public class Organization : Entity<Guid>
     {

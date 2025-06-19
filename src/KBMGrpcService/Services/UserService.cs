@@ -3,6 +3,7 @@ using KBMGrpcService.Application.DTOs.User;
 using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Common.Helpers;
 using KBMGrpcService.Domain.Entities;
+using KBMGrpcService.Entities;
 using KBMGrpcService.Infrastructure.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

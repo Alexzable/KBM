@@ -7,10 +7,10 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
   
-    <ItemGroup>
-      <Protobuf Include="..\KBMGrpcService\Protos\user.proto" GrpcServices="Client" />
-      <Protobuf Include="..\KBMGrpcService\Protos\organization.proto" GrpcServices="Client" />
-    </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos/organization.proto" GrpcServices="Client" />
+    <Protobuf Include="Protos/user.proto" GrpcServices="Client" />
+  </ItemGroup>
   
 
   <ItemGroup>

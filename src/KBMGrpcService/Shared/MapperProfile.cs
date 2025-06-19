@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Google.Protobuf.WellKnownTypes;
 using KBMGrpcService.Application.DTOs.Organization;
 using KBMGrpcService.Application.DTOs.User;
 using KBMGrpcService.Common.Extensions;
-using KBMGrpcService.Domain.Entities;
+using KBMGrpcService.Entities;
 using KBMGrpcService.Grpc;
 
 namespace KBMGrpcService.Common.Mapping

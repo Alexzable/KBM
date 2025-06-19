@@ -6,24 +6,22 @@ namespace KBMGrpcService.Common.Helpers
 {
     public class PaginatedList<TResult>
     {
-        public int Page { get; private set; }
-        public int PageSize { get; private set; }
-        public long Total { get; private set; }
-        public IEnumerable<TResult> Items { get; private set; } = Array.Empty<TResult>();
+        public int Page { get; internal set; }
+        public int PageSize { get; internal set; }
+        public long Total { get; internal set; }
+        public IEnumerable<TResult> Items { get; internal set; } = Array.Empty<TResult>();
 
-        private PaginatedList() { }
+        internal PaginatedList() { }
 
-        public static async Task<PaginatedList<TResult>> CreateAsync<TSource>(
-            IQueryable<TSource> source,
-            int page,
-            int pageSize,
-            IMapper mapper)
+        public static async Task<PaginatedList<TResult>> CreateAsync(
+              IQueryable<TResult> source,
+              int page,
+              int pageSize)
         {
             var total = await source.LongCountAsync();
             var items = await source
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
-                .ProjectTo<TResult>(mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return new PaginatedList<TResult>
@@ -34,5 +32,6 @@ namespace KBMGrpcService.Common.Helpers
                 Items = items
             };
         }
+
     }
 }

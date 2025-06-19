@@ -1,5 +1,5 @@
-﻿using KBMGrpcService.Domain.Entities;
-using KBMGrpcService.Domain.ValueObjects;
+﻿using KBMGrpcService.Domain.ValueObjects;
+using KBMGrpcService.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

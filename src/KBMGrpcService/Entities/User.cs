@@ -1,7 +1,7 @@
 ﻿using KBMGrpcService.Domain.Base;
 using KBMGrpcService.Domain.ValueObjects;
 
-namespace KBMGrpcService.Domain.Entities
+namespace KBMGrpcService.Entities
 {
     public class User : Entity<Guid>
     {

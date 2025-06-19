@@ -1,8 +1,10 @@
 ﻿using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Application.Services;
 using KBMGrpcService.Common.Mapping;
+using KBMGrpcService.Data.Repositories;
 using KBMGrpcService.Infrastructure.Data;
 using KBMGrpcService.Infrastructure.Data.Seeding;
+using KBMGrpcService.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace KBMGrpcService.Common.Extensions
@@ -27,6 +29,8 @@ namespace KBMGrpcService.Common.Extensions
             services.AddGrpc();
 
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
+
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
 
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
