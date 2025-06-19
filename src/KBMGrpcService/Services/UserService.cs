@@ -2,7 +2,6 @@
 using KBMGrpcService.Application.DTOs.User;
 using KBMGrpcService.Application.Interfaces;
 using KBMGrpcService.Common.Helpers;
-using KBMGrpcService.Domain.Entities;
 using KBMGrpcService.Entities;
 using KBMGrpcService.Infrastructure.Data;
 using Microsoft.Data.SqlClient;
@@ -100,7 +99,8 @@ namespace KBMGrpcService.Application.Services
                     ? q.OrderByDescending(e => EF.Property<object>(e, orderBy))
                     : q.OrderBy(e => EF.Property<object>(e, orderBy));
 
-                return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+                //return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+                return null;
             }
             catch (SqlException ex)
             {
@@ -235,7 +235,8 @@ namespace KBMGrpcService.Application.Services
                     ? q.OrderByDescending(e => EF.Property<object>(e, orderBy))
                     : q.OrderBy(e => EF.Property<object>(e, orderBy));
 
-                return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+                //return await PaginatedList<UserDto>.CreateAsync(q, page, pageSize, _mapper);
+                return null;
             }
             catch (SqlException ex)
             {

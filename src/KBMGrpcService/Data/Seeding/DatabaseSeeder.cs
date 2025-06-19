@@ -1,5 +1,6 @@
 ﻿using KBMGrpcService.Common.Constants;
-using KBMGrpcService.Domain.Entities;
+using KBMGrpcService.Domain.ValueObjects;
+using KBMGrpcService.Entities;
 using KBMGrpcService.Infrastructure.Data.Seeding.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -39,7 +40,7 @@ namespace KBMGrpcService.Infrastructure.Data.Seeding
                 {
                     Name = userDto.Name,
                     Username = userDto.Username,
-                    Email = new Domain.ValueObjects.Email(userDto.Email)
+                    Email = new Email(userDto.Email)
                 });
             }
             await context.SaveChangesAsync();
@@ -51,7 +52,7 @@ namespace KBMGrpcService.Infrastructure.Data.Seeding
                 if (user == null || org == null) continue;
                 if (await context.UserOrganizations.AnyAsync(uo => uo.UserId == user.Id && uo.OrganizationId == org.Id))
                     continue;
-                context.UserOrganizations.Add(new Domain.Entities.UserOrganization
+                context.UserOrganizations.Add(new UserOrganization
                 {
                     UserId = user.Id,
                     OrganizationId = org.Id

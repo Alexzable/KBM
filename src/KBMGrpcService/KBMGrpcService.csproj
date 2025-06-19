@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\**" />
+    <Compile Remove="Logs\**" />
+    <Content Remove="Infrastructure\**" />
+    <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <None Remove="Infrastructure\**" />
+    <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="Protos\organization.proto" GrpcServices="Server" ProtoRoot="Protos" />
     <Protobuf Include="Protos\user.proto" GrpcServices="Server" ProtoRoot="Protos" />
   </ItemGroup>
@@ -31,12 +42,6 @@
     </PackageReference>
     <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Infrastructure\Data\Migrations\" />
-    <Folder Include="Infrastructure\Data\Seeding\JSON\" />
-    <Folder Include="Logs\" />
   </ItemGroup>
 
 </Project>

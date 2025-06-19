@@ -28,7 +28,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -42,7 +42,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -68,7 +68,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -82,7 +82,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -95,7 +95,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -108,7 +108,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -121,7 +121,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
 
@@ -148,7 +148,7 @@ namespace KBMGrpcService.Grpc.Handlers
             }
             catch (Exception ex)
             {
-                throw GrpcErrorCustom.FromException(ex);
+                throw GrpcCustomError.FromException(ex);
             }
         }
     }

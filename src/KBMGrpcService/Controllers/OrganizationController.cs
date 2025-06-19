@@ -7,52 +7,36 @@ using KBMGrpcService.Common.Exceptions;
 
 namespace KBMGrpcService.Grpc.Handlers
 {
-    public class OrganizationController : OrganizationService.OrganizationServiceBase
+    public class OrganizationController(IOrganizationService orgService, IMapper mapper) : OrganizationService.OrganizationServiceBase
     {
-        private readonly IOrganizationService _orgService;
-        private readonly IMapper _mapper;
+        private readonly IOrganizationService _orgService = orgService;
+        private readonly IMapper _mapper = mapper;
 
-        public OrganizationController(IOrganizationService orgService, IMapper mapper)
+        public override Task<CreateOrganizationReply> CreateOrganization(CreateOrganizationRequest request, ServerCallContext context)
         {
-            _orgService = orgService;
-            _mapper = mapper;
-        }
-
-
-        public override async Task<CreateOrganizationReply> CreateOrganization(CreateOrganizationRequest request, ServerCallContext context)
-        {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = _mapper.Map<CreateOrganizationDto>(request);
                 var id = await _orgService.CreateAsync(appDto);
                 return new CreateOrganizationReply { Id = id.ToString() };
-            }
-            catch (Exception ex)
-            {
-                throw GrpcErrorCustom.FromException(ex);
-            }
+            }, "CreateOrganization", new { request.Name });
         }
 
-        public override async Task<GetOrganizationByIdReply> GetOrganizationById(GetOrganizationByIdRequest request, ServerCallContext context)
+        public override Task<GetOrganizationByIdReply> GetOrganizationById(GetOrganizationByIdRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = await _orgService.GetByIdAsync(Guid.Parse(request.Id));
                 var grpcDto = _mapper.Map<OrganizationMessage>(appDto);
                 return new GetOrganizationByIdReply { Organization = grpcDto };
-            }
-            catch (Exception ex)
-            {
-                throw GrpcErrorCustom.FromException(ex);
-            }
+            }, "GetOrganizationById", new { request.Id });
         }
 
-        public override async Task<QueryOrganizationsReply> QueryOrganizations(QueryOrganizationsRequest request, ServerCallContext context)
+        public override Task<QueryOrganizationsReply> QueryOrganizations(QueryOrganizationsRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var result = await _orgService.QueryAsync(request.Page, request.PageSize, request.OrderBy, request.Descending, request.QueryString);
-
                 var reply = new QueryOrganizationsReply
                 {
                     Page = result.Page,
@@ -60,45 +44,32 @@ namespace KBMGrpcService.Grpc.Handlers
                     Total = result.Total
                 };
 
-                foreach (var appDto in result.Items)
+                foreach (var dto in result.Items)
                 {
-                    reply.Items.Add(_mapper.Map<OrganizationMessage>(appDto));
+                    reply.Items.Add(_mapper.Map<OrganizationMessage>(dto));
                 }
 
                 return reply;
-            }
-            catch (Exception ex)
-            {
-                throw GrpcErrorCustom.FromException(ex);
-            }
+            }, "QueryOrganizations", new { request.Page, request.OrderBy, request.QueryString });
         }
 
-        public override async Task<Empty> UpdateOrganization(UpdateOrganizationRequest request, ServerCallContext context)
+        public override Task<Empty> UpdateOrganization(UpdateOrganizationRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 var appDto = _mapper.Map<UpdateOrganizationDto>(request);
                 await _orgService.UpdateAsync(appDto);
                 return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcErrorCustom.FromException(ex);
-            }
+            }, "UpdateOrganization", new { request.Id });
         }
 
-        public override async Task<Empty> DeleteOrganization(DeleteOrganizationRequest request, ServerCallContext context)
+        public override Task<Empty> DeleteOrganization(DeleteOrganizationRequest request, ServerCallContext context)
         {
-            try
+            return GrpcCustomError.TryCatchAsync(async () =>
             {
                 await _orgService.DeleteAsync(Guid.Parse(request.Id));
                 return new Empty();
-            }
-            catch (Exception ex)
-            {
-                throw GrpcErrorCustom.FromException(ex);
-            }
+            }, "DeleteOrganization", new { request.Id });
         }
-
     }
 }
