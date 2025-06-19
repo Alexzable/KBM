@@ -45,11 +45,12 @@ Press X then Enter in the run_app.bat prompt window
 1. Open Postman
 
 Import the collection file from: docs/postman/KBM_Organization_API.postman_collection
+
 Import the collection file from: docs/postman/KBM_Users_API.postman_collection
 
 2. Environment (if any):
 
-You can create a Postman environment with localhost:5001 and localhost:7011 as base URLs (gRPC & HTTP ports)
+You can create a Postman environment with localhost:5001 and localhost:6001 as base URLs (gRPC & HTTP ports)
 
 3. Ready to test!
 
@@ -126,5 +127,7 @@ Docker image used: mcr.microsoft.com/mssql/server:2017-latest
 SQL password is configured via .env
 
 All commands work offline once Docker image is pulled
+
+Setup HTTPS dev cert - dotnet dev-certs https --trust
 
 For detailed architecture or flow diagrams, see docs/illustrations/.
