@@ -1,6 +1,5 @@
-﻿using KBMHttpService.Clients.Grpc.Organization;
-using KBMHttpService.Clients.Grpc.User;
-using KBMHttpService.Common.Helpers;
+﻿using KBMHttpService.Services;
+using KBMHttpService.Services.Interfaces;
 
 namespace KBMHttpService.Common.Extensions
 {
@@ -10,8 +9,8 @@ namespace KBMHttpService.Common.Extensions
         {
             services.AddAutoMapper(typeof(MapperProfile));
 
-            services.AddScoped<IOrganizationGrpcClient, OrganizationGrpcClient>();
-            services.AddScoped<IUserGrpcClient, UserGrpcClient>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
