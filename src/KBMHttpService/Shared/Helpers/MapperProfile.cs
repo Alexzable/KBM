@@ -2,7 +2,7 @@
 using KBMHttpService.DTOs.Organization;
 using KBMHttpService.DTOs.User;
 
-namespace KBMHttpService.Common
+namespace KBMHttpService.Shared.Helpers
 {
     public class MapperProfile : Profile
     {

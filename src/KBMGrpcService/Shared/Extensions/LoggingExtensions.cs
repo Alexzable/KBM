@@ -1,9 +1,9 @@
-﻿using KBMGrpcService.Common.Constants;
-using Microsoft.AspNetCore.Hosting.Server.Features;
+﻿using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Hosting.Server;
 using Serilog;
+using KBMGrpcService.Shared.Constants;
 
-namespace KBMGrpcService.Common.Extensions
+namespace KBMGrpcService.Shared.Extensions
 {
     public static class LoggingExtensions
     {
@@ -39,7 +39,7 @@ namespace KBMGrpcService.Common.Extensions
                                       .Addresses;
 
                 app.Logger.LogInformation(
-                    "Configuration Application: KBMGrpcService is running on {Urls}",
+                    "**Configuration Application:** KBMGrpcService is running on {Urls}",
                     string.Join(", ", addresses));
                 app.Logger.LogInformation(new string('-', 50));
 

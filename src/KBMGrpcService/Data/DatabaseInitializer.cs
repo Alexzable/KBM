@@ -1,8 +1,8 @@
-﻿using KBMGrpcService.Infrastructure.Data.Seeding;
+﻿using KBMGrpcService.Data.Seeding;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace KBMGrpcService.Infrastructure.Data
+namespace KBMGrpcService.Data
 {
     public static class DatabaseInitializer
     {

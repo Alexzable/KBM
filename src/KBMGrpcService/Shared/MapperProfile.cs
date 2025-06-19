@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using KBMGrpcService.Application.DTOs.Organization;
-using KBMGrpcService.Application.DTOs.User;
-using KBMGrpcService.Common.Extensions;
+using KBMGrpcService.DTOs.Organization;
+using KBMGrpcService.DTOs.User;
 using KBMGrpcService.Entities;
 using KBMGrpcService.Grpc;
+using KBMGrpcService.Shared.Extensions;
 
-namespace KBMGrpcService.Common.Mapping
+namespace KBMGrpcService.Shared.Mapping
 {
     public class MapperProfile : Profile
     {

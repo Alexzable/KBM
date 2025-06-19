@@ -1,11 +1,12 @@
-﻿using KBMGrpcService.Common.Constants;
-using KBMGrpcService.Domain.ValueObjects;
+﻿using KBMGrpcService.Data.Seeding.DTOs;
 using KBMGrpcService.Entities;
-using KBMGrpcService.Infrastructure.Data.Seeding.DTOs;
+using KBMGrpcService.Entities.ValueObjects;
+using KBMGrpcService.Shared.Constants;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Text.Json;
 
-namespace KBMGrpcService.Infrastructure.Data.Seeding
+namespace KBMGrpcService.Data.Seeding
 {
     public class DatabaseSeeder : IDatabaseSeeder
     {
@@ -60,6 +61,8 @@ namespace KBMGrpcService.Infrastructure.Data.Seeding
             }
 
             await context.SaveChangesAsync();
+
+            Log.Information("**Configuration Application:** Initial data successfully imported from JSON files");
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using KBMGrpcService.Domain.Base;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace KBMGrpcService.Infrastructure.Data.Filters
+namespace KBMGrpcService.Data.Data.Filters
 {
     public static class SoftDeleteGenericFilter
     {

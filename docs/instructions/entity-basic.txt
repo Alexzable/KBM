@@ -10,7 +10,7 @@ Add a new migration with a descriptive name.
 
 Example:
 
-    Add-Migration AddUserTable -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir Infrastructure/Data/Migrations
+    Add-Migration InitialCreation -Project KBMGrpcService -StartupProject KBMGrpcService -OutputDir /Data/Migrations
 
 
 2. Update the Database

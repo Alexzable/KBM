@@ -3,7 +3,7 @@ using Grpc.Core;
 using Microsoft.Data.SqlClient;
 using Serilog;
 
-namespace KBMGrpcService.Common.Exceptions
+namespace KBMGrpcService.Shared.Exceptions
 {
     public static class GrpcCustomError
     {
@@ -45,39 +45,43 @@ namespace KBMGrpcService.Common.Exceptions
 
         public static async Task<T> TryCatchAsync<T>(Func<Task<T>> action, string context, object? contextData = null)
         {
-            var traceId = LogContextValues.Get("TraceId");
+            var traceId = TraceContext.TraceId;
             try
             {
                 return await action();
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "gRPC error in {Context} {@Data} - TraceId: {TraceId}", context, contextData, traceId);
+                Log.Error("gRPC error in {Context} {@Data} - Message: {Message} - TraceId: {TraceId}",
+                    context, contextData, ex.Message, traceId);
                 throw FromException(ex);
             }
         }
 
         public static async Task TryCatchAsync(Func<Task> action, string context, object? contextData = null)
         {
-            var traceId = LogContextValues.Get("TraceId");
+            var traceId = TraceContext.TraceId;
+
             try
             {
                 await action();
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "gRPC error in {Context} {@Data} - TraceId: {TraceId}", context, contextData, traceId);
+                Log.Error("gRPC error in {Context} {@Data} - Message: {Message} - TraceId: {TraceId}",
+                    context, contextData, ex.Message, traceId);
                 throw FromException(ex);
             }
         }
 
-        private static class LogContextValues
+        public static class TraceContext
         {
-            public static string? Get(string propertyName)
+            private static readonly AsyncLocal<string?> _traceId = new();
+
+            public static string? TraceId
             {
-                return Serilog.Context.LogContext.Push(new Serilog.Core.Enrichers.PropertyEnricher(propertyName, null)) is IDisposable context
-                    ? context.ToString()
-                    : null;
+                get => _traceId.Value;
+                set => _traceId.Value = value;
             }
         }
 

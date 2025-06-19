@@ -1,4 +1,5 @@
-﻿using KBMGrpcService.Domain.Base;
+﻿
+using KBMGrpcService.Entities.Base;
 
 namespace KBMGrpcService.Entities
 {

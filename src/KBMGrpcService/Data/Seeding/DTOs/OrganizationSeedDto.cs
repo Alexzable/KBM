@@ -1,4 +1,4 @@
-﻿namespace KBMGrpcService.Infrastructure.Data.Seeding.DTOs
+﻿namespace KBMGrpcService.Data.Seeding.DTOs
 {
     public class OrganizationSeedDto { 
         public string Name { get; set; } = null!; 

@@ -1,4 +1,4 @@
-﻿namespace KBMGrpcService.Infrastructure.Data.Seeding
+﻿namespace KBMGrpcService.Data.Seeding
 {
     public interface IDatabaseSeeder
     {

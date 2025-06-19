@@ -2,9 +2,10 @@
 using Grpc.Core;
 using Serilog;
 using Serilog.Context;
-using KBMGrpcService.Common.Constants;
+using KBMGrpcService.Shared.Constants;
+using static KBMGrpcService.Shared.Exceptions.GrpcCustomError;
 
-namespace KBMGrpcService.Grpc.Interceptors
+namespace KBMGrpcService.Shared.Interceptors
 {
 
     public class LoggingInterceptor : Interceptor
@@ -19,11 +20,14 @@ namespace KBMGrpcService.Grpc.Interceptors
 
             using (LogContext.PushProperty("TraceId", traceId))
             {
-                Log.Information("GRPC Request: {Method} - TraceId: {TraceId} - {@Request}", context.Method, traceId, request);
+                TraceContext.TraceId = traceId;
+
+                Log.Information("GRPC Request: {Method} - {@Request}", context.Method, request);
+
                 try
                 {
                     var response = await continuation(request, context);
-                    Log.Information("GRPC Response: {Method} - TraceId: {TraceId} - {@Response}", context.Method, traceId, response);
+                    Log.Information("GRPC Response: {Method} - {@Response}", context.Method, response);
                     return response;
                 }
                 catch (RpcException)
@@ -32,7 +36,8 @@ namespace KBMGrpcService.Grpc.Interceptors
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "GRPC Error: {Method} - TraceId: {TraceId}", context.Method, traceId);
+                    Log.Error("‼️ Unexpected error in {Method} - Reason: {Message} - TraceId: {TraceId}",
+                        context.Method, ex.Message, traceId);
                     throw new RpcException(new Status(StatusCode.Internal, "Internal server error"));
                 }
             }

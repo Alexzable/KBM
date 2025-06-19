@@ -1,9 +1,9 @@
-﻿using KBMGrpcService.Entities;
-using KBMGrpcService.Infrastructure.Configurations;
-using KBMGrpcService.Infrastructure.Data.Filters;
+﻿using KBMGrpcService.Data.Configurations;
+using KBMGrpcService.Data.Data.Filters;
+using KBMGrpcService.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace KBMGrpcService.Infrastructure.Data
+namespace KBMGrpcService.Data
 {
     public class AppDbContext : DbContext
     {

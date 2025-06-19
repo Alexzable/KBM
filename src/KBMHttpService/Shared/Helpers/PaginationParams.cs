@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KBMHttpService.Common
+namespace KBMHttpService.Shared.Helpers
 {
     public class PaginationParams
     {
@@ -15,6 +15,7 @@ namespace KBMHttpService.Common
         public bool Descending { get; set; } = false;
 
         public string QueryString
+
         {
             get => _queryString;
             set => _queryString = value ?? "";

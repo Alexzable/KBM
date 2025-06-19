@@ -1,6 +1,6 @@
 ﻿using KBMGrpcService.Grpc;
 
-namespace KBMHttpService.Common.Extensions
+namespace KBMHttpService.Shared.Extensions
 {
     public static class ClientsCollectionExtension
     {

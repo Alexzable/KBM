@@ -1,4 +1,4 @@
-﻿namespace KBMGrpcService.Domain.Base
+﻿namespace KBMGrpcService.Entities.Base
 {
     public interface IAuditable
     {

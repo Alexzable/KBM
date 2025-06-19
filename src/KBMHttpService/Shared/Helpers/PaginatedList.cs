@@ -1,4 +1,4 @@
-﻿namespace KBMHttpService.Common
+﻿namespace KBMHttpService.Shared.Helpers
 {
     public class PaginatedList
     {

@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
-namespace KBMGrpcService.Common.Helpers
+namespace KBMGrpcService.Shared.Helpers
 {
     public class PaginatedList<TResult>
     {

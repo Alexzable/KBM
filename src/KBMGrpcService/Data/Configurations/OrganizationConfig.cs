@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using KBMGrpcService.Entities;
 
-namespace KBMGrpcService.Infrastructure.Configurations
+namespace KBMGrpcService.Data.Configurations
 {
     public class OrganizationConfig : IEntityTypeConfiguration<Organization>
     {

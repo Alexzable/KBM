@@ -1,7 +1,6 @@
-﻿using KBMGrpcService.Common.Helpers;
-using KBMGrpcService.Entities;
-using KBMGrpcService.Infrastructure.Data;
+﻿using KBMGrpcService.Entities;
 using KBMGrpcService.Repository;
+using KBMGrpcService.Shared.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace KBMGrpcService.Data.Repositories
@@ -100,6 +99,14 @@ namespace KBMGrpcService.Data.Repositories
 
             if (!string.IsNullOrEmpty(query))
                 q = q.Where(u => u.Name.Contains(query));
+
+
+            orderBy = char.ToUpper(orderBy[0]) + orderBy[1..];
+
+            var props = typeof(User).GetProperties().Select(p => p.Name);
+            if (!props.Contains(orderBy))
+                throw new ArgumentException($"Invalid orderBy field '{orderBy}'", nameof(orderBy));
+        
 
             q = descending
                 ? q.OrderByDescending(e => EF.Property<object>(e, orderBy))

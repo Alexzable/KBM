@@ -48,7 +48,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61",
+							"raw": "localhost:6000/api/users/9ec4ead6-5dde-44f7-fe06-08ddaf3ca585",
 							"host": [
 								"localhost"
 							],
@@ -56,7 +56,7 @@
 							"path": [
 								"api",
 								"users",
-								"11a8b72c-dc28-4cc3-068b-08ddae295f61"
+								"9ec4ead6-5dde-44f7-fe06-08ddaf3ca585"
 							]
 						}
 					},
@@ -123,7 +123,7 @@
 							"raw": "{\n  \"name\": \"Alex Updated\",\n  \"username\": \"alex456\",\n  \"email\": \"alex.new@yahoo.com\"\n}"
 						},
 						"url": {
-							"raw": "localhost:6000/api/users/b272f921-640a-4544-d429-08ddae26a7d3",
+							"raw": "localhost:6000/api/users/9ec4ead6-5dde-44f7-fe06-08ddaf3ca585",
 							"host": [
 								"localhost"
 							],
@@ -131,7 +131,7 @@
 							"path": [
 								"api",
 								"users",
-								"b272f921-640a-4544-d429-08ddae26a7d3"
+								"9ec4ead6-5dde-44f7-fe06-08ddaf3ca585"
 							]
 						}
 					},
@@ -173,7 +173,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61/organizations/8E9A2942-7AC6-4AE0-E942-08DDACD43832",
+							"raw": "localhost:6000/api/users/9ec4ead6-5dde-44f7-fe06-08ddaf3ca585/organizations/40f952af-0eca-4377-6fd3-08ddaf338531",
 							"host": [
 								"localhost"
 							],
@@ -181,9 +181,9 @@
 							"path": [
 								"api",
 								"users",
-								"11a8b72c-dc28-4cc3-068b-08ddae295f61",
+								"9ec4ead6-5dde-44f7-fe06-08ddaf3ca585",
 								"organizations",
-								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+								"40f952af-0eca-4377-6fd3-08ddaf338531"
 							]
 						}
 					},
@@ -200,7 +200,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:6000/api/users/11a8b72c-dc28-4cc3-068b-08ddae295f61/organizations/8E9A2942-7AC6-4AE0-E942-08DDACD43832",
+							"raw": "localhost:6000/api/users/9ec4ead6-5dde-44f7-fe06-08ddaf3ca585/organizations/40F952AF-0ECA-4377-6FD3-08DDAF338531",
 							"host": [
 								"localhost"
 							],
@@ -208,9 +208,9 @@
 							"path": [
 								"api",
 								"users",
-								"11a8b72c-dc28-4cc3-068b-08ddae295f61",
+								"9ec4ead6-5dde-44f7-fe06-08ddaf3ca585",
 								"organizations",
-								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+								"40F952AF-0ECA-4377-6FD3-08DDAF338531"
 							]
 						}
 					},
@@ -227,7 +227,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:6000/api/users/organization/8E9A2942-7AC6-4AE0-E942-08DDACD43832?page=1&pageSize=5&orderBy=email&descending=true&query=",
+							"raw": "localhost:6000/api/users/organization/557CC377-89D3-4955-4C5E-08DDAF33598D?page=1&pageSize=10&orderBy=email&descending=true&queryString=",
 							"host": [
 								"localhost"
 							],
@@ -236,7 +236,7 @@
 								"api",
 								"users",
 								"organization",
-								"8E9A2942-7AC6-4AE0-E942-08DDACD43832"
+								"557CC377-89D3-4955-4C5E-08DDAF33598D"
 							],
 							"query": [
 								{
@@ -245,7 +245,7 @@
 								},
 								{
 									"key": "pageSize",
-									"value": "5"
+									"value": "10"
 								},
 								{
 									"key": "orderBy",
@@ -256,7 +256,7 @@
 									"value": "true"
 								},
 								{
-									"key": "query",
+									"key": "queryString",
 									"value": ""
 								}
 							]

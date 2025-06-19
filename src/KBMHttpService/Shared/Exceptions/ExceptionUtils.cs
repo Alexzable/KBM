@@ -3,7 +3,7 @@ using FluentValidation;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KBMHttpService.Common.Exceptions
+namespace KBMHttpService.Shared.Exceptions
 {
     public static class ExceptionUtils
     {
@@ -49,19 +49,6 @@ namespace KBMHttpService.Common.Exceptions
             try
             {
                 return await action();
-            }
-            catch (RpcException ex)
-            {
-                logger.LogError(ex, "gRPC call failed in {Context}", context);
-                throw new ExternalServiceException($"{context} failed.", ex);
-            }
-        }
-
-        public static async Task ExecuteGrpcCallAsync(Func<Task> action, string context, ILogger logger)
-        {
-            try
-            {
-                await action();
             }
             catch (RpcException ex)
             {

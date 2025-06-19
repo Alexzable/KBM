@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KBMGrpcService.Application.DTOs.User
+namespace KBMGrpcService.DTOs.User
 {
     public class CreateUserDto
     {

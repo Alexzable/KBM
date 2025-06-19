@@ -1,5 +1,5 @@
 ﻿
-namespace KBMGrpcService.Domain.Base
+namespace KBMGrpcService.Entities.Base
 {
     public abstract class Auditable : IAuditable
     {

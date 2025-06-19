@@ -1,6 +1,6 @@
-﻿using KBMGrpcService.Common.Extensions;
-using KBMGrpcService.Grpc.Handlers;
-using KBMGrpcService.Infrastructure.Data;
+﻿using KBMGrpcService.Controllers;
+using KBMGrpcService.Data;
+using KBMGrpcService.Shared.Extensions;
 using Serilog;
 
 

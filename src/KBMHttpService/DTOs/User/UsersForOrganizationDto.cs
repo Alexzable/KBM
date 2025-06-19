@@ -1,4 +1,4 @@
-﻿using KBMHttpService.Common;
+﻿using KBMHttpService.Shared.Helpers;
 using System.ComponentModel.DataAnnotations;
 
 namespace KBMHttpService.DTOs.User

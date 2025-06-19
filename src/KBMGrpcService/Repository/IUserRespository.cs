@@ -1,5 +1,5 @@
-﻿using KBMGrpcService.Common.Helpers;
-using KBMGrpcService.Entities;
+﻿using KBMGrpcService.Entities;
+using KBMGrpcService.Shared.Helpers;
 
 namespace KBMGrpcService.Repository
 {

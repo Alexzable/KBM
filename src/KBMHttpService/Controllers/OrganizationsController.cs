@@ -1,16 +1,16 @@
-﻿using KBMHttpService.Common;
-using KBMHttpService.Common.Exceptions;
+﻿using KBMHttpService.Shared.Exceptions;
 using KBMHttpService.DTOs.Organization;
-using KBMHttpService.Services;
 using Microsoft.AspNetCore.Mvc;
+using KBMHttpService.Shared.Helpers;
+using KBMHttpService.Services.Interfaces;
 
 namespace KBMHttpService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrganizationsController(OrganizationService grpcClient, ILogger<OrganizationsController> logger) : ControllerBase
+    public class OrganizationsController(IOrganizationService service, ILogger<OrganizationsController> logger) : ControllerBase
     {
-        private readonly OrganizationService _grpcClient = grpcClient;
+        private readonly IOrganizationService _service = service;
         private readonly ILogger<OrganizationsController> _logger = logger;
 
         [HttpPost]
@@ -18,7 +18,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var id = await _grpcClient.CreateOrganizationAsync(request);
+                var id = await _service.CreateOrganizationAsync(request);
                 return CreatedAtAction(nameof(GetById), new { id }, new ResultId<Guid> { Id = id });
             }, _logger, "Create organization");
         }
@@ -28,7 +28,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var org = await _grpcClient.GetOrganizationByIdAsync(id);
+                var org = await _service.GetOrganizationByIdAsync(id);
                 return Ok(org);
             }, _logger, "Get organization by ID");
         }
@@ -38,7 +38,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var result = await _grpcClient.QueryOrganizationsAsync(query);
+                var result = await _service.QueryOrganizationsAsync(query);
                 return Ok(result);
             }, _logger, "Query organizations");
         }
@@ -49,7 +49,7 @@ namespace KBMHttpService.Controllers
             return ExceptionUtils.TryCatchAsync(async () =>
             {
                 request.Id = id;
-                await _grpcClient.UpdateOrganizationAsync(request);
+                await _service.UpdateOrganizationAsync(request);
                 return NoContent();
             }, _logger, "Update organization");
         }
@@ -59,7 +59,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                await _grpcClient.DeleteOrganizationAsync(id);
+                await _service.DeleteOrganizationAsync(id);
                 return NoContent();
             }, _logger, "Delete organization");
         }

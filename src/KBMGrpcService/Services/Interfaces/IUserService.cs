@@ -1,7 +1,8 @@
-﻿using KBMGrpcService.Application.DTOs.User;
-using KBMGrpcService.Common.Helpers;
+﻿
+using KBMGrpcService.DTOs.User;
+using KBMGrpcService.Shared.Helpers;
 
-namespace KBMGrpcService.Application.Interfaces
+namespace KBMGrpcService.Services.Interfaces
 {
     public interface IUserService
     {

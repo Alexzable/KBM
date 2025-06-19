@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using KBMGrpcService.Application.DTOs.User;
-using KBMGrpcService.Application.Interfaces;
-using KBMGrpcService.Common.Exceptions;
+using KBMGrpcService.DTOs.User;
+using KBMGrpcService.Grpc;
+using KBMGrpcService.Services.Interfaces;
+using KBMGrpcService.Shared.Exceptions;
 
-namespace KBMGrpcService.Grpc.Handlers
+namespace KBMGrpcService.Controllers
 {
     public class UsersController(IUserService userService, IMapper mapper) : UserService.UserServiceBase
     {

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
-using KBMGrpcService.Common.Helpers;
+using KBMGrpcService.Shared.Helpers;
 using System.Reflection;
 
-namespace KBMGrpcService.Common.Extensions
+namespace KBMGrpcService.Shared.Extensions
 {
     public static class BLExtensions
     {

@@ -1,9 +1,9 @@
-﻿using KBMGrpcService.Domain.ValueObjects;
-using KBMGrpcService.Entities;
+﻿using KBMGrpcService.Entities;
+using KBMGrpcService.Entities.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace KBMGrpcService.Infrastructure.Configurations
+namespace KBMGrpcService.Data.Configurations
 {
     public class UserConfig : IEntityTypeConfiguration<User>
     {

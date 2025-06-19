@@ -1,16 +1,16 @@
-﻿using KBMHttpService.Common;
-using KBMHttpService.Common.Exceptions;
+﻿using KBMHttpService.Shared.Exceptions;
 using KBMHttpService.DTOs.User;
 using KBMHttpService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using KBMHttpService.Shared.Helpers;
 
 namespace KBMHttpService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController(IUserService grpcClient, ILogger<UsersController> logger) : ControllerBase
+    public class UsersController(IUserService service, ILogger<UsersController> logger) : ControllerBase
     {
-        private readonly IUserService _grpcClient = grpcClient;
+        private readonly IUserService _service = service;
         private readonly ILogger<UsersController> _logger = logger;
 
         [HttpPost]
@@ -18,7 +18,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var id = await _grpcClient.CreateUserAsync(request);
+                var id = await _service.CreateUserAsync(request);
                 return CreatedAtAction(nameof(GetById), new { id }, new ResultId<Guid> { Id = id });
             }, _logger, "Create user");
         }
@@ -28,7 +28,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var user = await _grpcClient.GetUserByIdAsync(id);
+                var user = await _service.GetUserByIdAsync(id);
                 return Ok(user);
             }, _logger, "Get user by ID");
         }
@@ -38,7 +38,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                var result = await _grpcClient.QueryUsersAsync(query);
+                var result = await _service.QueryUsersAsync(query);
                 return Ok(result);
             }, _logger, "Query users");
         }
@@ -49,7 +49,7 @@ namespace KBMHttpService.Controllers
             return ExceptionUtils.TryCatchAsync(async () =>
             {
                 request.Id = id;
-                await _grpcClient.UpdateUserAsync(request);
+                await _service.UpdateUserAsync(request);
                 return NoContent();
             }, _logger, "Update user");
         }
@@ -59,7 +59,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                await _grpcClient.DeleteUserAsync(id);
+                await _service.DeleteUserAsync(id);
                 return NoContent();
             }, _logger, "Delete user");
         }
@@ -69,7 +69,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                await _grpcClient.AssociateUserAsync(new AssociateUserDto { UserId = userId, OrganizationId = orgId });
+                await _service.AssociateUserAsync(new AssociateUserDto { UserId = userId, OrganizationId = orgId });
                 return NoContent();
             }, _logger, "Associate user");
         }
@@ -79,7 +79,7 @@ namespace KBMHttpService.Controllers
         {
             return ExceptionUtils.TryCatchAsync(async () =>
             {
-                await _grpcClient.DisassociateUserAsync(new AssociateUserDto { UserId = userId, OrganizationId = orgId });
+                await _service.DisassociateUserAsync(new AssociateUserDto { UserId = userId, OrganizationId = orgId });
                 return NoContent();
             }, _logger, "Disassociate user");
         }
@@ -90,7 +90,7 @@ namespace KBMHttpService.Controllers
             return ExceptionUtils.TryCatchAsync(async () =>
             {
                 query.OrganizationId = orgId;
-                var result = await _grpcClient.QueryUsersForOrganizationAsync(query);
+                var result = await _service.QueryUsersForOrganizationAsync(query);
                 return Ok(result);
             }, _logger, "Query users for org");
         }

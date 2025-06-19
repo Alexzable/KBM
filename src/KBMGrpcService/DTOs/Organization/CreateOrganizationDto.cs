@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace KBMGrpcService.Application.DTOs.Organization
+namespace KBMGrpcService.DTOs.Organization
 {
     public class CreateOrganizationDto
     {

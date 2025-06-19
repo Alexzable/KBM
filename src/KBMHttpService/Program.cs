@@ -1,5 +1,5 @@
-using KBMGrpcService.Grpc;
-using KBMHttpService.Common.Extensions;
+using KBMHttpService.Shared.Extensions;
+using KBMHttpService.Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +25,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseMiddleware<TraceIdMiddleware>();
 
 app.UseEndpoints(endpoints =>
 {

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using KBMGrpcService.Application.DTOs.Organization;
-using KBMGrpcService.Application.Interfaces;
-using KBMGrpcService.Common.Exceptions;
+using KBMGrpcService.DTOs.Organization;
+using KBMGrpcService.Grpc;
+using KBMGrpcService.Services.Interfaces;
+using KBMGrpcService.Shared.Exceptions;
 
-namespace KBMGrpcService.Grpc.Handlers
+namespace KBMGrpcService.Controllers
 {
     public class OrganizationsController(IOrganizationService orgService, IMapper mapper) : OrganizationService.OrganizationServiceBase
     {

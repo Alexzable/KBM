@@ -1,4 +1,4 @@
-﻿namespace KBMHttpService.Common.Exceptions
+﻿namespace KBMHttpService.Shared.Exceptions
 {
     public class ClientMappingException : Exception
     {

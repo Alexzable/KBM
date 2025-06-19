@@ -1,7 +1,7 @@
-﻿using KBMGrpcService.Application.DTOs.Organization;
-using KBMGrpcService.Common.Helpers;
+﻿using KBMGrpcService.DTOs.Organization;
+using KBMGrpcService.Shared.Helpers;
 
-namespace KBMGrpcService.Application.Interfaces
+namespace KBMGrpcService.Services.Interfaces
 {
     public interface IOrganizationService
     {

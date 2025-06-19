@@ -20,10 +20,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Test Org\",\n  \"address\": \"123 Test St\"\n}"
+							"raw": "{\n  \"name\": \"Test Organization Creation 2\",\n  \"address\": \"123 Test Alex\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:6000/api/organization",
+							"raw": "http://localhost:6000/api/organizations",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -31,7 +31,7 @@
 							"port": "6000",
 							"path": [
 								"api",
-								"organization"
+								"organizations"
 							]
 						}
 					},
@@ -43,7 +43,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:6000/api/organization/{{organizationId}}",
+							"raw": "http://localhost:6000/api/organizations/40f952af-0eca-4377-6fd3-08ddaf338531",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -51,8 +51,8 @@
 							"port": "6000",
 							"path": [
 								"api",
-								"organization",
-								"{{organizationId}}"
+								"organizations",
+								"40f952af-0eca-4377-6fd3-08ddaf338531"
 							]
 						}
 					},
@@ -64,7 +64,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:6000/api/organization?page=1&pageSize=2&orderBy=name&descending=false&queryString=",
+							"raw": "http://localhost:6000/api/organizations?page=1&pageSize=2&orderBy=name&descending=false&queryString=",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -72,7 +72,7 @@
 							"port": "6000",
 							"path": [
 								"api",
-								"organization"
+								"organizations"
 							],
 							"query": [
 								{
@@ -112,10 +112,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": \"{{organizationId}}\",\n  \"name\": \"Updated Org\",\n  \"address\": \"456 Updated Ave\"\n}"
+							"raw": "{\n  \"name\": \"Updated Org 2\",\n  \"address\": \"Test Address Update by Alex\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:6000/api/organization",
+							"raw": "http://localhost:6000/api/organizations/40f952af-0eca-4377-6fd3-08ddaf338331",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -123,7 +123,8 @@
 							"port": "6000",
 							"path": [
 								"api",
-								"organization"
+								"organizations",
+								"40f952af-0eca-4377-6fd3-08ddaf338331"
 							]
 						}
 					},
@@ -135,7 +136,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:6000/api/organization/{{organizationId}}",
+							"raw": "http://localhost:6000/api/organizations/40f952af-0eca-4377-6fd3-08ddaf338531",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -143,8 +144,8 @@
 							"port": "6000",
 							"path": [
 								"api",
-								"organization",
-								"{{organizationId}}"
+								"organizations",
+								"40f952af-0eca-4377-6fd3-08ddaf338531"
 							]
 						}
 					},

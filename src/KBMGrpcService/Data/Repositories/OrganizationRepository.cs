@@ -1,7 +1,6 @@
-﻿using KBMGrpcService.Common.Helpers;
-using KBMGrpcService.Entities;
-using KBMGrpcService.Infrastructure.Data;
+﻿using KBMGrpcService.Entities;
 using KBMGrpcService.Repository;
+using KBMGrpcService.Shared.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace KBMGrpcService.Data.Repositories

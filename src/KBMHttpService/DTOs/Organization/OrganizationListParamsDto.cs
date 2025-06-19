@@ -1,4 +1,4 @@
-﻿using KBMHttpService.Common;
+﻿using KBMHttpService.Shared.Helpers;
 
 namespace KBMHttpService.DTOs.Organization
 {

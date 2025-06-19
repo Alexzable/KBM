@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace KBMGrpcService.Domain.ValueObjects
+namespace KBMGrpcService.Entities.ValueObjects
 {
     public class Email : IEquatable<Email>
     {
