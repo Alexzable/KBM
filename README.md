@@ -73,6 +73,7 @@ KBM/
 ├── .env
 ├── run_app.bat
 ├── run_sqlserver_docker.bat
+├── run_services.bat
 └── docs/
     ├── postman/
     │   ├── KBM_Organization_API.postman_collection
@@ -98,9 +99,11 @@ docs/instructions/script-definition.txt
 
 This file explains in plain text what each .bat script does:
 
-run_app.bat – launches entire environment and waits for shutdown
+run_app.bat – Main entry point. Checks if the SQL Server container is already running. If it is, it launches the gRPC and HTTP services. If not, it starts the SQL Server container and then proceeds to launch the services.
 
-run_sqlserver_docker.bat – checks docker status, launches SQL Server container
+run_sqlserver_docker.bat – Verifies whether Docker Desktop is running and starts it if needed. Then it launches the SQL Server container using docker-compose, and once ready, it calls run_services.bat.
+
+run_services.bat – Starts the .NET services (KBMGrpcService and KBMHttpService) in separate terminal windows and provides an option to shut down the Docker container.
 
 docs/instructions/docker-setup.txt
 

@@ -1,4 +1,6 @@
 @echo off
+setlocal
+
 echo ===============================================
 echo Starting Docker SQL Server Environment
 echo ===============================================
@@ -7,8 +9,6 @@ REM 1. Check if Docker is installed
 where docker >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Docker is not installed or not in PATH.
-    echo Please install Docker before continuing.
-    echo See setup instructions here: docs\commands\docker-setup.txt
     exit /b 1
 )
 
@@ -18,13 +18,12 @@ tasklist /FI "IMAGENAME eq Docker Desktop.exe" | find /I "Docker Desktop.exe" >n
 if errorlevel 1 (
     echo Starting Docker Desktop...
     start "" "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-    timeout /t 15 >nul
+    timeout /t 8 >nul
 ) else (
     echo Docker Desktop is already running.
 )
 
 REM 3. Start docker-compose
-echo ---------------------------------------
 echo Launching SQL Server container...
 docker-compose up -d
 if %ERRORLEVEL% NEQ 0 (
@@ -34,5 +33,11 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo [SUCCESS] Docker SQL Server environment is running.
 
-REM Done - ready for next step in run_app.bat
+REM 4. Wait for SQL Server to finish initializing
+echo Waiting 8 seconds for SQL Server to be ready...
+timeout /t 8 >nul
+
+REM 5. Continue with services
+call run_services.bat
+
 exit /b 0

@@ -1,48 +1,51 @@
 1. run_app.bat
-
-🔹 Main entry point to launch the full development environment
+🔹 Main entry point to launch the full development environment.
 
 Steps performed:
 
-Checks if a SQL Server container (sqlserver) is already running
+Checks if a SQL Server container named sqlserver is already running using docker ps.
 
-If not, calls run_sqlserver_docker.bat with no-wait argument to set up Docker environment
+If not running, it calls run_sqlserver_docker.bat (with no-wait argument) to start the container.
 
-Sets the USE_DOCKER_DB=true environment variable so the .NET services connect to the Docker-based SQL Server
+If running, it immediately calls run_services.bat to launch the .NET services.
 
-Starts two services in separate terminal windows:
+Sets the USE_DOCKER_DB=true environment variable so the .NET apps connect to the Docker-based SQL Server.
 
-KBMGrpcService
-
-KBMHttpService
-
-Waits for user input (X) to stop Docker container (but not the services)
+Waits for user input (X) to shut down the Docker container using docker-compose down.
 
 2. run_sqlserver_docker.bat
-
-🔹 Handles launching and managing the Docker container for SQL Server
+🔹 Initializes the Docker SQL Server environment.
 
 Steps performed:
 
-Checks if Docker CLI is available (where docker)
+Verifies Docker CLI availability (where docker).
 
-Verifies if Docker Desktop is running; if not, attempts to launch it
+Checks if Docker Desktop is running; if not, launches it.
 
-Executes docker-compose up -d to run the SQL Server container in detached mode
+Runs docker-compose up -d to start the SQL Server container in detached mode.
 
-If called with no-wait, exits immediately after launching container
+After the container is started, automatically calls run_services.bat to start the gRPC and HTTP services.
 
-Otherwise, waits for user input (X) to shut down the container using docker-compose down
+Exits with appropriate error codes if Docker is not installed, startup fails, or docker-compose errors.
 
-Exits with appropriate error code if Docker is not found, startup fails, or shutdown fails
+3. run_services.bat
+🔹 Starts .NET services after SQL Server is ready.
 
-Additional Details
+Steps performed:
 
-Both scripts assume:
+Sets USE_DOCKER_DB=true as an environment variable.
 
-Docker image is pulled or available locally: mcr.microsoft.com/mssql/server:2017-latest
+Launches:
 
-The container name in docker-compose.yml is explicitly set to sqlserver
+KBMGrpcService – in a new terminal window.
 
-.env file contains required credentials like SA_PASSWORD
+KBMHttpService – in a new terminal window.
 
+Waits for user input (X) to shut down the Docker container using docker-compose down.
+
+🧩 Additional Details
+Assumes the Docker image mcr.microsoft.com/mssql/server:2019-latest is pulled or already available locally.
+
+The SQL Server container is named sqlserver in your docker-compose.yml.
+
+.env file is expected to contain required variables like SA_PASSWORD.
