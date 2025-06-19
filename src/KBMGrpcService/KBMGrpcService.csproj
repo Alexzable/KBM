@@ -5,18 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Infrastructure\**" />
-    <Compile Remove="Logs\**" />
-    <Content Remove="Infrastructure\**" />
-    <Content Remove="Logs\**" />
-    <EmbeddedResource Remove="Infrastructure\**" />
-    <EmbeddedResource Remove="Logs\**" />
-    <None Remove="Infrastructure\**" />
-    <None Remove="Logs\**" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <Protobuf Include="Protos\organization.proto" GrpcServices="Server" ProtoRoot="Protos" />
     <Protobuf Include="Protos\user.proto" GrpcServices="Server" ProtoRoot="Protos" />

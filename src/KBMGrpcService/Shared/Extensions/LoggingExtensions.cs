@@ -16,7 +16,7 @@ namespace KBMGrpcService.Common.Extensions
                 .Enrich.FromLogContext()
                 .WriteTo.Debug()
                 .WriteTo.File(
-                    path: builder.Configuration["Serilog:WriteTo:1:Args:path"] ?? AppConstants.SerilogPath,
+                    path: builder.Configuration["Serilog:WriteTo:1:Args:outputTemplate"] ?? AppConstants.SerilogPath,
                     rollingInterval: RollingInterval.Day,
                     outputTemplate: builder.Configuration["Serilog:WriteTo:1:Args:outputTemplate"]
                         ?? "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}"

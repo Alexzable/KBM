@@ -43,36 +43,43 @@ namespace KBMGrpcService.Common.Exceptions
             return new RpcException(new Status(StatusCode.InvalidArgument, "Duplicate data error: one or more unique constraints were violated."));
         }
 
-        public static async Task<T> TryCatchAsync<T>(
-            Func<Task<T>> action,
-            string context,
-            object? contextData = null)
+        public static async Task<T> TryCatchAsync<T>(Func<Task<T>> action, string context, object? contextData = null)
         {
+            var traceId = LogContextValues.Get("TraceId");
             try
             {
                 return await action();
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "gRPC error in {Context} {@Data}", context, contextData);
+                Log.Error(ex, "gRPC error in {Context} {@Data} - TraceId: {TraceId}", context, contextData, traceId);
                 throw FromException(ex);
             }
         }
 
-        public static async Task TryCatchAsync(
-            Func<Task> action,
-            string context,
-            object? contextData = null)
+        public static async Task TryCatchAsync(Func<Task> action, string context, object? contextData = null)
         {
+            var traceId = LogContextValues.Get("TraceId");
             try
             {
                 await action();
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "gRPC error in {Context} {@Data}", context, contextData);
+                Log.Error(ex, "gRPC error in {Context} {@Data} - TraceId: {TraceId}", context, contextData, traceId);
                 throw FromException(ex);
             }
         }
+
+        private static class LogContextValues
+        {
+            public static string? Get(string propertyName)
+            {
+                return Serilog.Context.LogContext.Push(new Serilog.Core.Enrichers.PropertyEnricher(propertyName, null)) is IDisposable context
+                    ? context.ToString()
+                    : null;
+            }
+        }
+
     }
 }

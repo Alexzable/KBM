@@ -2,6 +2,7 @@
 using KBMGrpcService.Application.Services;
 using KBMGrpcService.Common.Mapping;
 using KBMGrpcService.Data.Repositories;
+using KBMGrpcService.Grpc.Interceptors;
 using KBMGrpcService.Infrastructure.Data;
 using KBMGrpcService.Infrastructure.Data.Seeding;
 using KBMGrpcService.Repository;
@@ -26,7 +27,10 @@ namespace KBMGrpcService.Common.Extensions
 
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddGrpc();
+            services.AddGrpc(options =>
+            {
+                options.Interceptors.Add<LoggingInterceptor>();
+            });
 
             services.AddScoped<IDatabaseSeeder, DatabaseSeeder>();
 
