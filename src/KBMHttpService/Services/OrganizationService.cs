@@ -21,13 +21,10 @@ namespace KBMHttpService.Services
 
         public async Task<Guid> CreateOrganizationAsync(CreateOrganizationDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<CreateOrganizationRequest>(request), _logger);
+            var protoReq = _mapper.Map<CreateOrganizationRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.CreateOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "CreateOrganization", _logger);
-
+            var reply = await _client.CreateOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
             return _mapper.Map<ResultId<Guid>>(reply).Id;
         }
 
@@ -35,43 +32,37 @@ namespace KBMHttpService.Services
         {
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.GetOrganizationByIdAsync(new GetOrganizationByIdRequest { Id = id.ToString() }, new CallOptions(metadata)).ResponseAsync,
-                "GetOrganizationById", _logger);
+            var reply = await _client.GetOrganizationByIdAsync(
+                new GetOrganizationByIdRequest { Id = id.ToString() },
+                new CallOptions(metadata)).ResponseAsync;
 
             return _mapper.Map<OrganizationDto>(reply.Organization);
         }
 
         public async Task<OrganizationListDto> QueryOrganizationsAsync(OrganizationListParamsDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<QueryOrganizationsRequest>(request), _logger);
+            var protoReq = _mapper.Map<QueryOrganizationsRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.QueryOrganizationsAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "QueryOrganizations", _logger);
-
+            var reply = await _client.QueryOrganizationsAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
             return _mapper.Map<OrganizationListDto>(reply);
         }
 
         public async Task UpdateOrganizationAsync(UpdateOrganizationDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<UpdateOrganizationRequest>(request), _logger);
+            var protoReq = _mapper.Map<UpdateOrganizationRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.UpdateOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "UpdateOrganization", _logger);
+            await _client.UpdateOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
         }
 
         public async Task DeleteOrganizationAsync(Guid id)
         {
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.DeleteOrganizationAsync(new DeleteOrganizationRequest { Id = id.ToString() }, new CallOptions(metadata)).ResponseAsync,
-                "DeleteOrganization", _logger);
+            await _client.DeleteOrganizationAsync(
+                new DeleteOrganizationRequest { Id = id.ToString() },
+                new CallOptions(metadata)).ResponseAsync;
         }
-
     }
 }

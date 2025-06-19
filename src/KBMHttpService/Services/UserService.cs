@@ -19,16 +19,12 @@ namespace KBMHttpService.Services
             private readonly ILogger<UserService> _logger = logger;
             private readonly GrpcMetadataFactory _metadataFactory = metadataFactory;
 
-
         public async Task<Guid> CreateUserAsync(CreateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<CreateUserRequest>(request), _logger);
+            var protoReq = _mapper.Map<CreateUserRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.CreateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "CreateUser", _logger);
-
+            var reply = await _client.CreateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
             return _mapper.Map<ResultId<Guid>>(reply).Id;
         }
 
@@ -36,73 +32,61 @@ namespace KBMHttpService.Services
         {
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.GetUserByIdAsync(new GetUserByIdRequest { Id = id.ToString() }, new CallOptions(metadata)).ResponseAsync,
-                "GetUserById", _logger);
+            var reply = await _client.GetUserByIdAsync(
+                new GetUserByIdRequest { Id = id.ToString() },
+                new CallOptions(metadata)).ResponseAsync;
 
             return _mapper.Map<UserDto>(reply.User);
         }
 
         public async Task<UserListDto> QueryUsersAsync(UserListParamsDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<QueryUsersRequest>(request), _logger);
+            var protoReq = _mapper.Map<QueryUsersRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.QueryUsersAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "QueryUsers", _logger);
-
+            var reply = await _client.QueryUsersAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
             return _mapper.Map<UserListDto>(reply);
         }
 
         public async Task UpdateUserAsync(UpdateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<UpdateUserRequest>(request), _logger);
+            var protoReq = _mapper.Map<UpdateUserRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.UpdateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "UpdateUser", _logger);
+            await _client.UpdateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
         }
 
         public async Task DeleteUserAsync(Guid id)
         {
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.DeleteUserAsync(new DeleteUserRequest { Id = id.ToString() }, new CallOptions(metadata)).ResponseAsync,
-                "DeleteUser", _logger);
+            await _client.DeleteUserAsync(
+                new DeleteUserRequest { Id = id.ToString() },
+                new CallOptions(metadata)).ResponseAsync;
         }
 
         public async Task AssociateUserAsync(AssociateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<AssociateUserRequest>(request), _logger);
+            var protoReq = _mapper.Map<AssociateUserRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.AssociateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "AssociateUser", _logger);
+            await _client.AssociateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
         }
 
         public async Task DisassociateUserAsync(AssociateUserDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<AssociateUserRequest>(request), _logger);
+            var protoReq = _mapper.Map<AssociateUserRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.DisassociateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "DisassociateUser", _logger);
+            await _client.DisassociateUserAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
         }
 
         public async Task<UserListDto> QueryUsersForOrganizationAsync(UsersForOrganizationDto request)
         {
-            var protoReq = ExceptionUtils.ExecuteMapping(() => _mapper.Map<QueryUsersForOrganizationRequest>(request), _logger);
+            var protoReq = _mapper.Map<QueryUsersForOrganizationRequest>(request);
             var metadata = _metadataFactory.Create();
 
-            var reply = await ExceptionUtils.ExecuteGrpcCallAsync(
-                () => _client.QueryUsersForOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync,
-                "QueryUsersForOrganization", _logger);
-
+            var reply = await _client.QueryUsersForOrganizationAsync(protoReq, new CallOptions(metadata)).ResponseAsync;
             return _mapper.Map<UserListDto>(reply);
         }
 
