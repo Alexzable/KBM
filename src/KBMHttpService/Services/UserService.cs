@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Grpc.Core;
 using KBMGrpcService.Grpc;
-using KBMHttpService.Shared.Exceptions;
 using KBMHttpService.Shared.Helpers;
 using KBMHttpService.DTOs.User;
 using KBMHttpService.Services.Interfaces;
